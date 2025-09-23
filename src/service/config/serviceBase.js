@@ -19,36 +19,6 @@ export default class ServiceBase {
         }
     }
 
-    getTokenAdmin() {
-        let logged = Cookies.get('user-logged');
-        if (logged) {
-            let cookie = JSON.parse(logged);
-            return cookie.token;
-        } else {
-            return '';
-        }
-    }
-
-    getUserAdmin() {
-        let logged = Cookies.get('user-logged-admin');
-        if (logged) {
-            let cookie = JSON.parse(logged);
-            return cookie;
-        } else {
-            return {};
-        }
-    }
-
-    getUserClient() {
-        let logged = Cookies.get('user-logged-client');
-        if (logged) {
-            let cookie = JSON.parse(logged);
-            return cookie;
-        } else {
-            return {};
-        }
-    }
-
     async get(path) {
         try {
             let r = await this.api.get(path);
