@@ -93,7 +93,7 @@ Para executar este projeto localmente, siga os passos abaixo:
 ~~~
 
 6 - Acesse o site:
-A aplicação será executada em http://localhost:3000 (por padrão). Para que o front-end funcione corretamente, é necessário que o back-end do projeto também esteja em execução. Para instruções sobre como rodar o back-end, consulte o repositório mencionado no tópico anterior.
+A aplicação será executada em http://localhost:5173 (por padrão). Para que o front-end funcione corretamente, é necessário que o back-end do projeto também esteja em execução. Para instruções sobre como rodar o back-end, consulte o repositório mencionado no tópico anterior.
 
 <br>
 
