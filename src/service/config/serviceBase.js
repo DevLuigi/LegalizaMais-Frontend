@@ -1,11 +1,10 @@
 import axios from 'axios'
 import Cookies from "js-cookie";
-import { API_URL, Errors } from './config'
 
 export default class ServiceBase {
     constructor(mainPath) {
         this.api = axios.create({
-            baseURL: `${API_URL}${mainPath}`
+            baseURL: `http://localhost:8080${mainPath}`
         });
     }
 
@@ -21,104 +20,77 @@ export default class ServiceBase {
 
     async get(path) {
         try {
-            let r = await this.api.get(path);
-            return this.handleResponse(r);
-        } catch (e) {
-            return this.handleError(e);
+            let response = await this.api.get(path);
+            return this.handleResponse(response);
+        } catch (error) {
+            return this.handleError(error);
         }
     }    
 
     async post(path, body) {
         try {
-            let r = await this.api.post(path, body);
-            return this.handleResponse(r);
-        } catch (e) {
-            return this.handleError(e);
+            let response = await this.api.post(path, body);
+            return this.handleResponse(response);
+        } catch (error) {
+            return this.handleError(error);
         }
     }
 
     async postImage(path, body) {
         try {
-            let r = await this.api.post(path, body, {
+            let response = await this.api.post(path, body, {
                 headers: { "Content-Type": "multipart/form-data" }
             });
-            return this.handleResponse(r);
-        } catch (e) {
-            return this.handleError(e);
+            return this.handleResponse(response);
+        } catch (error) {
+            return this.handleError(error);
         }
     }
 
     async put(path, body) {
         try {
-            let r = await this.api.put(path, body);
-            return this.handleResponse(r);
-        } catch (e) {
-            return this.handleError(e);
+            let response = await this.api.put(path, body);
+            return this.handleResponse(response);
+        } catch (error) {
+            return this.handleError(error);
         }
     }
 
     async patch(path) {
         try {
-            let r = await this.api.patch(path);
-            return this.handleResponse(r);
-        } catch (e) {
-            return this.handleError(e);
+            let response = await this.api.patch(path);
+            return this.handleResponse(response);
+        } catch (error) {
+            return this.handleError(error);
         }
     }
 
     async patchImage(path) {
         try {
-            let r = await this.api.patch(path, {}, {
+            let response = await this.api.patch(path, {}, {
                 headers: { "Content-Type": "multipart/form-data" }
             });
-            return this.handleResponse(r);
-        } catch (e) {
-            return this.handleError(e);
+            return this.handleResponse(response);
+        } catch (error) {
+            return this.handleError(error);
         }
     }
 
     async delete(path) {
         try {
-            let r = await this.api.delete(path);
-            return this.handleResponse(r);
-        } catch (e) {
-            return this.handleError(e);
+            let response = await this.api.delete(path);
+            return this.handleResponse(response);
+        } catch (error) {
+            return this.handleError(error);
         }
     }
 
     handleResponse(response) {
-        const { data, status } = response;
-        return { data, status } || {};
+        return response.data;
     }
 
-
-    handleError(e) {
-        return this.getError(e);
+    handleError(error) {
+        return error.message;
     }
-
-
-    getError(e) {
-        if (e.response?.data?.error) {
-            return {
-                error: e.response.data.error,
-                errorName: e.response.data.errorName ?? Errors.General,
-                message: e.message,
-                status: e.status
-            }
-        } else if (e.response?.data) {
-            return {
-                error: e.response.data,
-                errorName: e.response.data,
-                message: e.message,
-                status: e.status
-            }
-        } else {
-            return {
-                error: 'Ocorreu um erro. Já estamos tentando resolver!',
-                errorName: Errors.Unknown,
-                message: e.message,
-                status: e.status
-            }      
-        }
-    }
+        
 }

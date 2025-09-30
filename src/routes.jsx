@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Exemplo from "./pages/exemplo";
+import Example from "./pages/example";
 
 export default function RoutesProject() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/exemplo" element={<Exemplo />} />
+                <Route path="/exemplo" element={<Example />} />
             </Routes>     
         </BrowserRouter>
     )
