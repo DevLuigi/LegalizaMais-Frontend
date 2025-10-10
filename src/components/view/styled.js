@@ -20,7 +20,7 @@ const Content = styled.div`
 const GroupPath = styled.div`
   display: flex;
   justify-content: space-evenly;
-  width: 220px;
+  width: 300px;
   margin: 1em;
 `;
 
