@@ -16,6 +16,10 @@ const Container = styled.div`
 const Text = styled.div`
     text-align: center;
     width: 45%;
+
+    button {
+        width: 50%;
+    }
 `; 
 
 export { Container, Text };
