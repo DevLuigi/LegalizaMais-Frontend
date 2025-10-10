@@ -15,7 +15,7 @@ const Container = styled.div`
 
 const Text = styled.div`
     text-align: center;
-    width: 35%;
+    width: 45%;
 `; 
 
 export { Container, Text };
