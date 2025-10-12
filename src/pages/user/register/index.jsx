@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import Input from "../../../components/input";
 import { useState } from "react";
 import { Background, Title, AddressBox, GroupButtons } from "./styled";
-import { CardBox } from "../../../components/cardBox";
+import CardBox from "../../../components/cardBox";
 
 // Import do API
 import UserAPI from "../../../service/user/user.js";
@@ -141,10 +141,15 @@ export default function Register() {
             return;
         }
 
+        // map para ordinal
+        let personTypeFormatted = null;
+        if (personType === "Física") personTypeFormatted = "FISICA";
+        if (personType === "Jurídica") personTypeFormatted = "JURIDICA";
+
         const response = await api.register({
             name,
             document,
-            personType,
+            personType: personTypeFormatted,
             ddd,
             phone,
             email,
@@ -153,85 +158,92 @@ export default function Register() {
             addressComplement,
             addressNumber
         });
+
         console.log(response);
 
+        if (response.status !== 201) {
+            toast.warn(response.error);
+            console.log(response.message);
+            toast.error("Erro ao cadastrar usuário!");
+            return;
+        }
+
+        console.log(response);
         toast.success("Usuário cadastrado com sucesso!");
-        // navigation("/login"); // Redireciona para a página de login
+        navigation("/exemplo"); // Redireciona para a página de login
     }
 
     return (
-        <ViewMain path={path}>
-            <Background>
-                <CardBox>
-                    <Container>
-                        <Title>Cadastro</Title>
+        <Background>
+            <CardBox>
+                <Container>
+                    <Title>Cadastro de usuário</Title>
 
-                        <div className="grid">
-                            <Input label="Nome" value={name} onChange={setName} />
-                            <Input label="E-mail" value={email} onChange={setEmail} />
-                        </div>
+                    <div className="grid">
+                        <Input label="Nome" value={name} onChange={setName} />
+                        <Input label="E-mail" value={email} onChange={setEmail} />
+                    </div>
 
-                        <div className="grid">
-                            <Input label="Documento" value={document} onChange={setDocument} />
-                            <Input
-                                label="Tipo de pessoa"
-                                selectOptions={options}
-                                value={personType}
-                                onChange={setPersonType}
-                            />
-                        </div>
+                    <div className="grid">
+                        <Input label="Documento" value={document} onChange={setDocument} />
+                        <Input
+                            label="Tipo de pessoa"
+                            selectOptions={options}
+                            value={personType}
+                            onChange={setPersonType}
+                        />
+                    </div>
 
-                        <div className="grid">
-                            <Input label="DDD" value={ddd} onChange={setDdd} />
-                            <Input label="Telefone" value={phone} onChange={setPhone} />
-                        </div>
+                    <div className="grid">
+                        <Input label="DDD" value={ddd} onChange={setDdd} />
+                        <Input label="Telefone" value={phone} onChange={setPhone} />
+                    </div>
 
-                        <div className="grid">
-                            <Input label="Senha" type="password" value={password} onChange={setPassword} />
-                            <Input
-                                label="Confirmar Senha"
-                                type="password"
-                                value={confirmPassword}
-                                onChange={setConfirmPassword}
-                            />
-                        </div>
+                    <div className="grid">
+                        <Input label="Senha" type="password" value={password} onChange={setPassword} />
+                        <Input
+                            label="Confirmar Senha"
+                            type="password"
+                            value={confirmPassword}
+                            onChange={setConfirmPassword}
+                        />
+                    </div>
 
-                        <h3>Endereço</h3>
+                    <h3>Endereço</h3>
 
-                        <div className="grid">
-                            <Input label="CEP" value={cep} onChange={handleCepChange} />
-                        </div>
+                    <div className="grid">
+                        <Input label="CEP" value={cep} onChange={handleCepChange} />
+                    </div>
 
-                        <div className="grid">
-                            <Input
-                                label="Complemento"
-                                value={addressComplement}
-                                onChange={setAddressComplement}
-                            />
-                            <Input
-                                label="Número"
-                                value={addressNumber}
-                                onChange={setAddressNumber}
-                            />
-                        </div>
+                    <div className="grid">
+                        <Input
+                            label="Complemento"
+                            value={addressComplement}
+                            onChange={setAddressComplement}
+                        />
+                        <Input
+                            label="Número"
+                            value={addressNumber}
+                            onChange={setAddressNumber}
+                        />
+                    </div>
 
-                        <AddressBox>
-                            <p><strong>Localidade encontrada</strong></p>
-                            <p>{addressInfo ? addressInfo : "Digite um CEP válido para buscar o endereço"}</p>
-                        </AddressBox>
+                    <AddressBox>
+                        <p><strong>Localidade encontrada</strong></p>
+                        <p>{addressInfo ? addressInfo : "Digite um CEP válido para buscar o endereço"}</p>
+                    </AddressBox>
 
-                        <GroupButtons>
-                            <Button id="btn-cadastrar" color="blue" onClick={register}>
-                                Cadastrar
-                            </Button>
-                            <Button id="btn-cancelar" color="red" onClick={() => navigation("/")}>
-                                Cancelar
-                            </Button>
-                        </GroupButtons>
-                    </Container>
-                </CardBox>
-            </Background>
-        </ViewMain>
+                    <GroupButtons>
+                        <Button id="btn-cadastrar" color="blue" onClick={register}>
+                            Cadastrar
+                        </Button>
+                        <Button id="btn-cancelar" color="red" onClick={() => navigation("/")}>
+                            Cancelar
+                        </Button>
+                    </GroupButtons>
+                </Container>
+            </CardBox>
+        </Background>
     );
 
 }

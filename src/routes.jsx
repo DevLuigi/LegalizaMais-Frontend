@@ -26,7 +26,7 @@ export default function RoutesProject() {
                 <Route path="/exemplo" element={<Example />} />
 
                 {/* User */}
-                {<Route path="/register" element={<Register />} />}
+                <Route path="/register" element={<Register />} />
                 
                 {/* Clients */}
                 <Route path="/clients" element={<ListClients />} />
