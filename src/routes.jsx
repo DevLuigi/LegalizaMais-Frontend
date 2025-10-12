@@ -2,6 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Example from "./pages/example";
 
+// User
+import Register from "./pages/user/register";
+
 // Clients
 import ListClients from "./pages/clients/list"
 
@@ -21,6 +24,9 @@ export default function RoutesProject() {
             <Routes>
                 
                 <Route path="/exemplo" element={<Example />} />
+
+                {/* User */}
+                {<Route path="/register" element={<Register />} />}
                 
                 {/* Clients */}
                 <Route path="/clients" element={<ListClients />} />
