@@ -25,12 +25,15 @@ export default class ServiceBase {
         } catch (error) {
             return this.handleError(error);
         }
-    }    
+    }
 
     async post(path, body) {
         try {
             let response = await this.api.post(path, body);
-            return this.handleResponse(response);
+            return {
+                status: response.status,
+                data: response.data
+            };
         } catch (error) {
             return this.handleError(error);
         }
@@ -92,5 +95,5 @@ export default class ServiceBase {
     handleError(error) {
         return error.message;
     }
-        
+
 }

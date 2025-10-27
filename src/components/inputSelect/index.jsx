@@ -1,13 +1,13 @@
 import { Container, Label, Field, Select } from "./styled.js";
 
-export default function Input(props) {
+export default function InputSelect(props) {
   const { label, value, onChange, selectOptions, placeholder, type } = props;
 
   console.log("Placeholder recebido:", placeholder);
 
   return (
     <Container>
-      <Label>{label}</Label>
+      {label && <Label>{label}</Label>}
       {selectOptions ? (
         <Select
           value={value}
