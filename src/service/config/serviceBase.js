@@ -30,10 +30,7 @@ export default class ServiceBase {
     async post(path, body) {
         try {
             let response = await this.api.post(path, body);
-            return {
-                status: response.status,
-                data: response.data
-            };
+            return this.handleResponse(response);
         } catch (error) {
             return this.handleError(error);
         }
@@ -89,7 +86,10 @@ export default class ServiceBase {
     }
 
     handleResponse(response) {
-        return response.data;
+        return {
+            status: response.status,
+            data: response.data
+        };
     }
 
     handleError(error) {
