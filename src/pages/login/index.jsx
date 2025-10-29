@@ -1,5 +1,4 @@
 import React from "react";
-import { useEffect, useState } from "react";
 import {
   Container,
   Card,
@@ -8,19 +7,26 @@ import {
   Input,
   Button,
   SignupText,
+  Logo,
+  GroupLabelInput
 } from "./styled";
 
 export default function Login() {
   return (
     <Container>
+      <Logo src="/assets/images/logo.png" alt="Logo" />
       <Card>
         <Title>Login</Title>
         <form>
-          <Label>Email</Label>
-          <Input type="email" placeholder="Digite seu email" />
+          <GroupLabelInput>
+            <Label>Email</Label>
+            <Input type="email" placeholder="Digite seu email" />
+          </GroupLabelInput>
 
-          <Label>Senha</Label>
-          <Input type="password" placeholder="Digite sua senha" />
+          <GroupLabelInput>
+            <Label>Senha</Label>
+            <Input type="password" placeholder="Digite sua senha" />
+          </GroupLabelInput>
 
           <SignupText>
             Não tem uma conta ainda? <a href="#">Cadastre-se</a>

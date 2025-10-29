@@ -21,6 +21,14 @@ export const Card = styled.div`
   text-align: center;
 `;
 
+// Logo no canto superior direito
+export const Logo = styled.img`
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  width: 120px;
+`;
+
 // Título “Login”
 export const Title = styled.h2`
   color: #003399;
@@ -40,7 +48,6 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input`
-  width: 100%;
   height: 38px;
   border: 1px solid #d1d1d1;
   border-radius: 5px;
@@ -89,4 +96,9 @@ export const SignupText = styled.p`
       text-decoration: underline;
     }
   }
+`;
+
+export const GroupLabelInput = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
