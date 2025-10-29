@@ -1,33 +1,20 @@
-import { Container, Label, Field, Select } from "./styled.js";
+import { Container, Label, Select } from "./styled.js";
 
-export default function InputSelect(props) {
-  const { label, value, onChange, selectOptions, placeholder, type } = props;
-
-  console.log("Placeholder recebido:", placeholder);
-
+export default function InputSelect({ label, value, onChange, options = [] }) {
   return (
     <Container>
       {label && <Label>{label}</Label>}
-      {selectOptions ? (
-        <Select
-          value={value}
-          onChange={(e) => onChange && onChange(e.target.value)}
-        >
-          <option value="">Selecione</option>
-          {selectOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </Select>
-      ) : (
-        <Field
-          type={type || "text"}
-          value={value}
-          onChange={(e) => onChange && onChange(e.target.value)}
-          placeholder={placeholder || ""}
-        />
-      )}
+      <Select value={value} onChange={(e) => onChange?.(e.target.value)}>
+        <option value="">Selecione</option>
+        {options.map((option) => (
+          <option
+            key={option.value ?? option}
+            value={option.value ?? option}
+          >
+            {option.label ?? option}
+          </option>
+        ))}
+      </Select>
     </Container>
   );
 }

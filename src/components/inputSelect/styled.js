@@ -33,17 +33,17 @@ export const Field = styled.input`
 `;
 
 export const Select = styled.select`
-  padding: 8px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 6px;
   outline: none;
   background-color: #fff;
   color: #000;
   font-size: 14px;
-  cursor: pointer;
-  appearance: none; /* remove setas nativas em alguns navegadores */
+  transition: border 0.2s ease;
 
   &:focus {
-    border-color: #4a90e2;
+    border-color: #0056b3;
   }
 `;

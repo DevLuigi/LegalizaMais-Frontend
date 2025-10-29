@@ -62,6 +62,20 @@ export default function Register() {
 
   const isInvalidEmail = () => !/^[a-zA-Z0-9.+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
 
+  // Limita a quantidade máxima de caracteres permitidos
+  const limitDocument = (value) => {
+    // CPF → 11 dígitos / CNPJ → 14 dígitos
+    const maxLength = personType === "JURIDICA" ? 14 : 11;
+    return value.replace(/\D/g, "").slice(0, maxLength);
+  };
+
+  const limitDdd = (value) => value.replace(/\D/g, "").slice(0, 2);
+
+  const limitPhone = (value) => value.replace(/\D/g, "").slice(0, 9);
+
+  const limitCep = (value) => value.replace(/\D/g, "").slice(0, 8);
+
+
   async function register() {
     // Validação simples
     if (!name || !document || !personType || !ddd || !phone || !email || !password || !confirmPassword || !cep || !addressComplement || !addressNumber) {
@@ -96,8 +110,13 @@ export default function Register() {
     const response = await api.register(payload);
     console.log(response)
 
-    if (response.status != 201) {
-      toast.error("Erro ao cadastrar usuário!");
+    if (!response || response.status !== 201) {
+      const errorMessage =
+        response?.message ||
+        response?.error ||
+        "Erro ao cadastrar usuário. Verifique os dados e tente novamente.";
+      toast.error(errorMessage);
+      return;
     }
 
     toast.success("Usuário cadastrado com sucesso!");
@@ -126,28 +145,37 @@ export default function Register() {
 
           <div className="grid">
             <Input label="Nome" value={name} onChange={setName} placeholder="Digite seu nome completo" />
-            <Input label="E-mail" value={email} onChange={setEmail} placeholder="exemplo@dominio.com" />
+            <Input label="E-mail" value={email} onChange={setEmail} placeholder="Digite seu email" />
           </div>
 
           <div className="grid">
             <Input
               label="Documento"
               value={document}
-              onChange={setDocument}
-              placeholder={personType === "JURIDICA" ? "Digite o CNPJ" : "Digite o CPF"}
+              onChange={(v) => setDocument(limitDocument(v))}
+              placeholder={personType === "JURIDICA" ? "Digite o CNPJ (Apenas números)" : "Digite o CPF (Apenas números)"}
             />
-            <Input
+            <InputSelect
               label="Tipo de pessoa"
               options={options}
               value={personType}
               onChange={setPersonType}
             />
-
           </div>
 
           <div className="grid">
-            <Input label="DDD" value={ddd} onChange={setDdd} placeholder="Ex: 11" />
-            <Input label="Telefone" value={phone} onChange={setPhone} placeholder="Ex: 91234-5678" />
+            <Input
+              label="DDD"
+              value={ddd}
+              onChange={(v) => setDdd(limitDdd(v))}
+              placeholder="Digite o DDD do seu telefone"
+            />
+            <Input
+              label="Telefone"
+              value={phone}
+              onChange={(v) => setPhone(limitPhone(v))}
+              placeholder="Digite seu telefone (Apenas números)"
+            />
           </div>
 
           <div className="grid">
@@ -158,7 +186,15 @@ export default function Register() {
           <h3>Endereço</h3>
 
           <div className="grid">
-            <Input label="CEP" value={cep} onChange={handleCepChange} placeholder="Ex: 01001-000" />
+            <Input
+              label="CEP"
+              value={cep}
+              onChange={(v) => {
+                const formatted = limitCep(v);
+                handleCepChange(formatted);
+              }}
+              placeholder="Digite seu cep (Apenas números)"
+            />
           </div>
 
           <div className="grid">
