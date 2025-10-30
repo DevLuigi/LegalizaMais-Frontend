@@ -3,29 +3,34 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 6px;
+  width: ${(props) => props.width || "100%"};
 `;
 
 export const Label = styled.label`
   font-weight: 600;
-  margin-bottom: 5px;
+  color: #000;
+  font-size: 15px;
 `;
 
 export const Field = styled.input`
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 10px;
   outline: none;
-  background-color: #fff;
+  background-color: #f3f3f3;
   color: #000;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
 
   &::placeholder {
-    color: #888;
-    opacity: 1; /* Garante visibilidade em todos os navegadores */
+    color: #999;
   }
-`;
 
-export const Select = styled.select`
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  &:focus {
+    background-color: #e9e9e9;
+  }
 `;
