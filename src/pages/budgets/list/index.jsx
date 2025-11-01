@@ -24,6 +24,7 @@ export default function ListBudgets() {
     actions.set("PDF", () => { alert("Substituir por função de gerar PDF") });
     actions.set("email", () => { alert("Substituir por função de enviar email") });
     actions.set("whatsapp", () => { alert("Substituir por função de enviar WhatsApp") });
+    actions.set("kebab", () => { alert("Substituir por função do menu kebab") });
     // actions.set("none", () => {}); // Use "none" para esconder a coluna de ações
 
     useEffect(() => {

@@ -1,4 +1,4 @@
-import { Pencil, Trash2, FileText, Mail, MessageCircleMore } from "lucide-react";
+import { Pencil, Trash2, FileText, Mail, MessageCircleMore, EllipsisVertical } from "lucide-react";
 import { 
     TableContainer, 
     StyledTable, 
@@ -65,6 +65,12 @@ export default function Table({ actions, data }) {
                     {actions?.has("whatsapp") && (
                       <ActionButton color="#1976d2">
                         <MessageCircleMore size={16} onClick={() => actions.get('whatsapp')()} />
+                      </ActionButton>
+                    )}
+
+                    {actions?.has("kebab") && (
+                      <ActionButton>
+                        <EllipsisVertical size={16} onClick={() => actions.get('kebab')()}/>
                       </ActionButton>
                     )}
 
