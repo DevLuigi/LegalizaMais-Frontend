@@ -1,5 +1,5 @@
-import Button from "../../components/button";
-import ViewMain from "../../components/view/viewMain";
+import Button from "@components/button";
+import ViewMain from "@components/view/viewMain";
 import { Container } from "./styled";
 
 // Importantdo API
