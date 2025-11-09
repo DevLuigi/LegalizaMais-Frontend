@@ -10,14 +10,14 @@ import {
     ActionButton 
 } from './styled.js';
 
-export default function Table({ actions, data }) {
+export default function Table({ actions, data, header }) {
   return (
     <TableContainer>
       <StyledTable>
         <TableHead>
           <tr>
             {
-              Object.keys(data[0]).map((key) => (
+              Object.keys(header).map((key) => (
                 <TableHeader key={key}>{key}</TableHeader>
               ))
             }
@@ -40,13 +40,13 @@ export default function Table({ actions, data }) {
                   <ActionCell>
                     {actions?.has("edit") && (
                       <ActionButton color="#d0d318">
-                        <Pencil size={16} onClick={() => actions.get('edit')()} />
+                        <Pencil size={16} onClick={() => actions.get('edit')(item)} />
                       </ActionButton>
                     )}
 
                     {actions?.has("delete") && (
                       <ActionButton color="#d32f2f">
-                        <Trash2 size={16} onClick={() => actions.get('delete')()} />
+                        <Trash2 size={16} onClick={() => actions.get('delete')(item)} />
                       </ActionButton>
                     )}
 

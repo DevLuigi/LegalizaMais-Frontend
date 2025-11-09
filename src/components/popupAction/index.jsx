@@ -1,6 +1,6 @@
 import Modal from "react-modal";
-import { Container } from "./styled";
-import Button from "../button";
+import Button from "@components/button";
+import { Container, Title } from "./styled";
 
 const customStyles = {
   content: {
@@ -16,10 +16,11 @@ const customStyles = {
   },
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.6)",
+    zIndex: 1000 // Forçando Z-index de 1000 para que seja superior a qualquer componente
   },
 };
 
-export default function Popup({ message, renderModal, setterRender, onConfirm,}) {
+export default function PopupAction({ actions, renderModal, setterRender }) {
   const closeModal = () => {
     setterRender(false);
   };
@@ -32,20 +33,17 @@ export default function Popup({ message, renderModal, setterRender, onConfirm,})
       contentLabel="Example Modal"
     >
       <div>
-        <h2> {message} </h2>
         <Container>
-          <Button
-            color="blue"
-            onClick={async () => {
-              await onConfirm();
-              closeModal();
-            }}
-          > 
-            Sim
-          </Button>
-          <Button color="red" onClick={() => closeModal()}>
-            Não
-          </Button>
+          <Title> Ações </Title>
+          {
+            Array.from(actions.entries()).map(([name, func], i) => 
+              (
+                <Button key={i} color="blue" onClick={() => func()}> 
+                  {name}
+                </Button>
+              )
+            )
+          }
         </Container>
       </div>
     </Modal>
