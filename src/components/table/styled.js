@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const TableContainer = styled.div`
-  max-height: 75vh;
+  max-height: 70vh;
   width: 85vw;
   overflow-y: auto;
   overflow-x: auto;

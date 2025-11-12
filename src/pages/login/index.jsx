@@ -1,4 +1,4 @@
-import React from "react";
+import LogoImage from '@images/logo.png';
 import {
   Container,
   Card,
@@ -14,7 +14,7 @@ import {
 export default function Login() {
   return (
     <Container>
-      <Logo src="/assets/images/logo.png" alt="Logo" />
+      <Logo src={LogoImage} alt="Logo" />
       <Card>
         <Title>Login</Title>
         <form>

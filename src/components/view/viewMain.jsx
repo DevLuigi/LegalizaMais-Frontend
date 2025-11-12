@@ -1,5 +1,5 @@
-import Menu from '../menu/index.jsx';
-import Footer from '../footer/index.jsx';
+import Menu from '@components/menu';
+import Footer from '@components/footer';
 
 import { Container, Content, GroupPath, Path } from './styled.js';
 

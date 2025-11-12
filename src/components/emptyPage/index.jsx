@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
-import Button from "../../components/button";
+import ImageEmptyPage from '@images/empty-page.png';
+import Button from "@components/button";
 
 import { Container, Text } from "./styled";
 
@@ -19,7 +20,7 @@ export default function EmptyPage(props) {
                     Adicionar
                 </Button>
             </Text>
-            <img src="/assets/images/empty-page.png" alt="empty-page-image" />
+            <img src={ImageEmptyPage} alt="empty-page-image" />
         </Container>
     )
 }
