@@ -143,100 +143,128 @@ export default function Register() {
         <Container>
           <Title>Cadastro de Usuário</Title>
 
-          <div className="grid">
-            <Input label="Nome" value={name} onChange={setName} placeholder="Digite seu nome completo" width="93%" />
-            <Input label="E-mail" value={email} onChange={setEmail} placeholder="Digite seu email" width="93%" />
+          <section id="dataSection">
+
+            <div id="nameEmail">
+              <div className="grid">
+                <Input label="Nome" value={name} onChange={setName} placeholder="Digite seu nome completo" width="93%" />
+                <Input label="E-mail" value={email} onChange={setEmail} placeholder="Digite seu email" width="93%" />
+              </div>
+            </div>
+
+            <div id="documentAndPassword">
+              <div id="document">
+                <div className="grid">
+                  <Input
+                    label="Documento"
+                    value={document}
+                    onChange={(v) => setDocument(limitDocument(v))}
+                    placeholder={personType === "JURIDICA" ? "Digite o CNPJ (Apenas números)" : "Digite o CPF (Apenas números)"}
+                    width="100%"
+                  />
+                  <InputSelect
+                    label="Tipo de pessoa"
+                    options={options}
+                    value={personType}
+                    onChange={setPersonType}
+                    width="70%"
+                  />
+                </div>
+              </div>
+
+              <div id="password">
+                <div className="row">
+                  <Input
+                    label="Senha"
+                    type="password"
+                    value={password}
+                    onChange={setPassword}
+                    placeholder="Crie uma senha"
+                    width="100%" />
+
+                  <Input
+                    label="Confirmar Senha"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={setConfirmPassword}
+                    placeholder="Repita sua senha"
+                    width="100%" />
+                </div>
+              </div>
+            </div>
+
+
+            <div id="phone">
+              <div className="gridPhone">
+                <Input
+                  label="DDD"
+                  value={ddd}
+                  onChange={(v) => setDdd(limitDdd(v))}
+                  placeholder="Digite o DDD"
+                  width="55%"
+                />
+                <Input
+                  label="Telefone"
+                  value={phone}
+                  onChange={(v) => setPhone(limitPhone(v))}
+                  placeholder="Digite seu telefone (Apenas números)"
+                  width="100%"
+                />
+              </div>
+            </div>
+
+
+          </section>
+
+          <div id="addressTitle">
+            <h3>Endereço</h3>
           </div>
 
-          <div className="grid">
-            <Input
-              label="Documento"
-              value={document}
-              onChange={(v) => setDocument(limitDocument(v))}
-              placeholder={personType === "JURIDICA" ? "Digite o CNPJ (Apenas números)" : "Digite o CPF (Apenas números)"}
-              width="93%"
-            />
-            <InputSelect
-              label="Tipo de pessoa"
-              options={options}
-              value={personType}
-              onChange={setPersonType}
-              width="35%"
-            />
-          </div>
+          <section id="address">
 
-          <div className="grid">
-            <Input
-              label="DDD"
-              value={ddd}
-              onChange={(v) => setDdd(limitDdd(v))}
-              placeholder="Digite o DDD do seu telefone"
-              width="50%"
-            />
-            <Input
-              label="Telefone"
-              value={phone}
-              onChange={(v) => setPhone(limitPhone(v))}
-              placeholder="Digite seu telefone (Apenas números)"
-              width="93%"
-            />
-          </div>
+            <div id="leftAddress">
+              <div id="cep">
+                <Input
+                  label="CEP"
+                  value={cep}
+                  onChange={(v) => {
+                    const formatted = limitCep(v);
+                    handleCepChange(formatted);
+                  }}
+                  placeholder="Digite seu cep (Apenas números)"
+                  width="100%"
+                />
+              </div>
 
-          <div className="grid">
-            <Input
-              label="Senha"
-              type="password"
-              value={password}
-              onChange={setPassword}
-              placeholder="Crie uma senha"
-              width="93%" />
+              <div id="complement">
+                <Input
+                  label="Complemento"
+                  value={addressComplement}
+                  onChange={setAddressComplement}
+                  placeholder="Apartamento, bloco, etc."
+                  width="100%"
+                />
 
-            <Input
-              label="Confirmar Senha"
-              type="password"
-              value={confirmPassword}
-              onChange={setConfirmPassword}
-              placeholder="Repita sua senha"
-              width="93%" />
-          </div>
+                <Input
+                  label="Número"
+                  value={addressNumber}
+                  onChange={setAddressNumber}
+                  placeholder="Número da residência"
+                  width="100%"
+                />
+              </div>
+            </div>
 
-          <h3>Endereço</h3>
 
-          <div className="grid">
-            <Input
-              label="CEP"
-              value={cep}
-              onChange={(v) => {
-                const formatted = limitCep(v);
-                handleCepChange(formatted);
-              }}
-              placeholder="Digite seu cep (Apenas números)"
-              width="93%"
-            />
-          </div>
+            <div id="addressBox">
+              <AddressBox>
+                <p><strong>Localidade encontrada</strong></p>
+                <p>{addressInfo || "Digite um CEP válido acima para buscar o endereço"}</p>
+              </AddressBox>
+            </div>
 
-          <div className="grid">
-            <Input
-              label="Complemento"
-              value={addressComplement}
-              onChange={setAddressComplement}
-              placeholder="Apartamento, bloco, etc."
-              width="93%"
-            />
+          </section>
 
-            <Input
-              label="Número"
-              value={addressNumber}
-              onChange={setAddressNumber}
-              placeholder="Número da residência"
-              width="40%"
-            />
-          </div>
-
-          <AddressBox>
-            <p><strong>Localidade encontrada</strong></p>
-            <p>{addressInfo || "Digite um CEP válido acima para buscar o endereço"}</p>
-          </AddressBox>
 
           <GroupButtons>
             <Button color="blue" onClick={register}>Cadastrar</Button>
