@@ -1,6 +1,7 @@
 import Button from "../../../components/button";
+import LogoImage from '@images/logo.png';
 import ViewMain from "../../../components/view/viewMain";
-import { Container } from "./styled";
+import { Container, Logo } from "./styled";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Input from "../../../components/input";
@@ -125,20 +126,7 @@ export default function Register() {
 
   return (
     <Background>
-
-      <div style={{
-        display: "flex",
-        justifyContent: "flex-end",
-        alignItems: "flex-start",
-        width: "100%"
-      }}>
-        <img
-          src="/assets/images/logo.png"
-          alt="Logo LegalizaMais"
-          style={{ marginBottom: "1rem", marginTop: "2rem" }}
-        />
-      </div>
-
+      <Logo src={LogoImage} alt="Logo" />
       <CardBox>
         <Container>
           <Title>Cadastro de Usuário</Title>
@@ -180,7 +168,7 @@ export default function Register() {
                     value={password}
                     onChange={setPassword}
                     placeholder="Crie uma senha"
-                    width="100%" />
+                    width="170%" />
 
                   <Input
                     label="Confirmar Senha"
@@ -188,7 +176,7 @@ export default function Register() {
                     value={confirmPassword}
                     onChange={setConfirmPassword}
                     placeholder="Repita sua senha"
-                    width="100%" />
+                    width="170%" />
                 </div>
               </div>
             </div>
@@ -201,14 +189,14 @@ export default function Register() {
                   value={ddd}
                   onChange={(v) => setDdd(limitDdd(v))}
                   placeholder="Digite o DDD"
-                  width="55%"
+                  width="25%"
                 />
                 <Input
                   label="Telefone"
                   value={phone}
                   onChange={(v) => setPhone(limitPhone(v))}
                   placeholder="Digite seu telefone (Apenas números)"
-                  width="100%"
+                  width="50%"
                 />
               </div>
             </div>
@@ -232,7 +220,7 @@ export default function Register() {
                     handleCepChange(formatted);
                   }}
                   placeholder="Digite seu cep (Apenas números)"
-                  width="100%"
+                  width="210%"
                 />
               </div>
 
@@ -242,7 +230,7 @@ export default function Register() {
                   value={addressComplement}
                   onChange={setAddressComplement}
                   placeholder="Apartamento, bloco, etc."
-                  width="100%"
+                  width="35%"
                 />
 
                 <Input
@@ -250,7 +238,7 @@ export default function Register() {
                   value={addressNumber}
                   onChange={setAddressNumber}
                   placeholder="Número da residência"
-                  width="100%"
+                  width="20%"
                 />
               </div>
             </div>

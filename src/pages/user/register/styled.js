@@ -41,8 +41,8 @@ export const Container = styled.div`
   }
 
   .gridPhone {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    gap: 10%;
   }
 
   h3 {
@@ -121,7 +121,9 @@ export const Container = styled.div`
   }
 
   #complement {
-    width: 50%;
+    display: flex;
+    width: 150%;
+    gap: 5rem;
   }
 
   #addressBox {
@@ -132,6 +134,7 @@ export const Container = styled.div`
     font-size: 0.9rem;
     color: #000;
     line-height: 1.4;
+    margin-left: 5rem;
   }
 `;
 
@@ -149,7 +152,7 @@ export const AddressBox = styled.div`
   padding: 1em;
   font-size: 0.9rem;
   color: #000;
-  line-height: 1.4;
+  height: 11rem;
 `;
 
 export const GroupButtons = styled.div`
@@ -157,4 +160,11 @@ export const GroupButtons = styled.div`
   justify-content: center;
   margin-top: 1.5rem;
   gap: 1.5rem;
+`;
+
+export const Logo = styled.img`
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  width: 120px;
 `;
