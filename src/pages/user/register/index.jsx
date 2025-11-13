@@ -133,14 +133,11 @@ export default function Register() {
 
           <section id="dataSection">
 
-            <div id="nameEmail">
-              <div className="grid">
+            <div id="leftData">
+              <div id="name">
                 <Input label="Nome" value={name} onChange={setName} placeholder="Digite seu nome completo" width="93%" />
-                <Input label="E-mail" value={email} onChange={setEmail} placeholder="Digite seu email" width="93%" />
               </div>
-            </div>
 
-            <div id="documentAndPassword">
               <div id="document">
                 <div className="grid">
                   <Input
@@ -155,9 +152,35 @@ export default function Register() {
                     options={options}
                     value={personType}
                     onChange={setPersonType}
-                    width="70%"
+                    width="100%"
                   />
                 </div>
+              </div>
+
+              <div id="phone">
+                <div className="gridPhone">
+                  <Input
+                    label="DDD"
+                    value={ddd}
+                    onChange={(v) => setDdd(limitDdd(v))}
+                    placeholder="Digite o DDD"
+                    width="25%"
+                  />
+                  <Input
+                    label="Telefone"
+                    value={phone}
+                    onChange={(v) => setPhone(limitPhone(v))}
+                    placeholder="Digite seu telefone (Apenas números)"
+                    width="60%"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div id="rightData">
+
+              <div id="email">
+                <Input label="E-mail" value={email} onChange={setEmail} placeholder="Digite seu email" width="93%" />
               </div>
 
               <div id="password">
@@ -179,28 +202,8 @@ export default function Register() {
                     width="170%" />
                 </div>
               </div>
+
             </div>
-
-
-            <div id="phone">
-              <div className="gridPhone">
-                <Input
-                  label="DDD"
-                  value={ddd}
-                  onChange={(v) => setDdd(limitDdd(v))}
-                  placeholder="Digite o DDD"
-                  width="25%"
-                />
-                <Input
-                  label="Telefone"
-                  value={phone}
-                  onChange={(v) => setPhone(limitPhone(v))}
-                  placeholder="Digite seu telefone (Apenas números)"
-                  width="50%"
-                />
-              </div>
-            </div>
-
 
           </section>
 
@@ -250,16 +253,15 @@ export default function Register() {
                 <p>{addressInfo || "Digite um CEP válido acima para buscar o endereço"}</p>
               </AddressBox>
             </div>
-
           </section>
-
 
           <GroupButtons>
             <Button color="blue" onClick={register}>Cadastrar</Button>
             <Button color="red" onClick={() => navigate("/")}>Cancelar</Button>
           </GroupButtons>
+
         </Container>
       </CardBox>
-    </Background>
+    </Background >
   );
 }

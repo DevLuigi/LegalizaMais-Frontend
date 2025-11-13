@@ -55,12 +55,24 @@ export const Container = styled.div`
   #dataSection {
     display:flex;
     justify-content: center;
+    gap: 5%;
+
+    width: 100%;
+  }
+
+  #leftData {
+    display:flex;
+    justify-content: center;
     flex-direction: column;
 
     width: 100%;
   }
 
-  #nameEmail {
+  #rightData {
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+
     width: 100%;
   }
 
