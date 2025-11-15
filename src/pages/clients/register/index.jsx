@@ -1,6 +1,5 @@
 import Button from "../../../components/button";
 import LogoImage from '@images/logo.png';
-import ViewMain from "../../../components/view/viewMain";
 import { Container, Logo } from "./styled";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -23,7 +22,6 @@ export default function ClientRegister() {
     const [ddd, setDdd] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
     const [cep, setCep] = useState("");
     const [addressComplement, setAddressComplement] = useState("");
     const [addressNumber, setAddressNumber] = useState("");
