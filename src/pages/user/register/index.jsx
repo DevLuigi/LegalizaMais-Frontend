@@ -1,6 +1,5 @@
 import Button from "../../../components/button";
 import LogoImage from '@images/logo.png';
-import ViewMain from "../../../components/view/viewMain";
 import { Container, Logo } from "./styled";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
