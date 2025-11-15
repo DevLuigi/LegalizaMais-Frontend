@@ -25,7 +25,7 @@ export default class ServiceBase {
         } catch (error) {
             return this.handleError(error);
         }
-    }    
+    }
 
     async post(path, body) {
         try {
@@ -86,11 +86,14 @@ export default class ServiceBase {
     }
 
     handleResponse(response) {
-        return response.data;
+        return {
+            status: response.status,
+            data: response.data
+        };
     }
 
     handleError(error) {
         return error.message;
     }
-        
+
 }

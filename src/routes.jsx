@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // Pages
 import Example from "./pages/example";
 
+// User
+import Register from "./pages/user/register";
+
 // Clients
 import ListClients from "./pages/clients/list";
 
@@ -25,8 +28,12 @@ export default function RoutesProject() {
   return (
     <BrowserRouter>
       <Routes>
+        
         {/* Login */}
         <Route path="/" element={<Login />} />
+  
+        {/* User */}
+        <Route path="/register" element={<Register />} />
         
         {/* Example */}
         <Route path="/exemplo" element={<Example />} />
