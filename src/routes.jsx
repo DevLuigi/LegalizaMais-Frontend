@@ -21,6 +21,9 @@ import ListContracts from "./pages/contracts/list";
 // Login
 import Login from "./pages/login";
 
+// Home
+import Home from "./pages/home";
+
 export default function RoutesProject() {
   return (
     <BrowserRouter>
@@ -46,7 +49,9 @@ export default function RoutesProject() {
 
         {/* Contracts */}
         <Route path="/contracts" element={<ListContracts />} />
-          
+
+        {/* Home */}
+        <Route path="/home" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );
