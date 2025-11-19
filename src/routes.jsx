@@ -30,7 +30,7 @@ export default function RoutesProject() {
       <Routes>
         
         {/* Login */}
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
   
         {/* User */}
         <Route path="/register" element={<Register />} />

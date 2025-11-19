@@ -12,4 +12,8 @@ export default class UserAPI extends ServiceBase {
     async register(body) {
         return await super.post('', body);
     }
+
+     async login(body) {
+        return await super.post('/login', body);
+    }
 }

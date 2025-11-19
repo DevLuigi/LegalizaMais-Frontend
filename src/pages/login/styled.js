@@ -8,6 +8,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   background: linear-gradient(to bottom, #4da8ff, #cce7ff);
+  position: relative;
 `;
 
 // Card central
@@ -29,15 +30,16 @@ export const Logo = styled.img`
   width: 120px;
 `;
 
-// Título “Login”
+// Título "Login"
 export const Title = styled.h2`
   color: #003399;
   font-weight: 700;
   margin-bottom: 25px;
   font-family: "Poppins", sans-serif;
+  font-size: 24px;
 `;
 
-// Labels e inputs
+// Labels
 export const Label = styled.label`
   display: block;
   text-align: left;
@@ -45,9 +47,12 @@ export const Label = styled.label`
   font-size: 14px;
   margin-bottom: 6px;
   font-weight: 500;
+  font-family: "Poppins", sans-serif;
 `;
 
+// Inputs
 export const Input = styled.input`
+  width: 100%;
   height: 38px;
   border: 1px solid #d1d1d1;
   border-radius: 5px;
@@ -56,6 +61,8 @@ export const Input = styled.input`
   font-size: 14px;
   outline: none;
   transition: border 0.2s ease-in-out;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 
   &:focus {
     border-color: #003399;
@@ -75,17 +82,20 @@ export const Button = styled.button`
   cursor: pointer;
   transition: background 0.2s ease-in-out;
   margin-top: 10px;
+  font-family: "Poppins", sans-serif;
 
   &:hover {
     background: #003be3;
   }
 `;
 
-// Texto de cadastro
-export const SignupText = styled.p`
+// Texto de cadastro (corrigido o nome)
+export const RegisterText = styled.p`
   font-size: 13px;
   color: #333;
   margin-top: 5px;
+  margin-bottom: 20px;
+  font-family: "Poppins", sans-serif;
 
   a {
     color: #1a49ff;
