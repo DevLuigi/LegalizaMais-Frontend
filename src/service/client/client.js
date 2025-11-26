@@ -13,7 +13,15 @@ export default class ClientAPI extends ServiceBase {
         return await super.get(`/${id}`);
     }
 
-    async register(body) {
+    async saveClient(body) {
         return await super.post('', body);
+    }
+
+    async updateClient(id, body) {
+        return await super.put(`/${id}`, body);
+    }
+
+    async deleteClient(id) {
+        return await super.delete(`/${id}`);
     }
 }
