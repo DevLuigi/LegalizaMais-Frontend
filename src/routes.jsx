@@ -8,6 +8,7 @@ import Register from "./pages/user/register";
 
 // Clients
 import ListClients from "./pages/clients/list";
+import ClientRegister from "./pages/clients/register";
 
 // Services
 import ListServices from "./pages/services/list";
@@ -30,7 +31,7 @@ export default function RoutesProject() {
       <Routes>
         
         {/* Login */}
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
   
         {/* User */}
         <Route path="/register" element={<Register />} />
@@ -40,6 +41,7 @@ export default function RoutesProject() {
 
         {/* Clients */}
         <Route path="/clients" element={<ListClients />} />
+        <Route path="/clients/register" element={<ClientRegister />} />
 
         {/* Services */}
         <Route path="/services" element={<ListServices />} />
