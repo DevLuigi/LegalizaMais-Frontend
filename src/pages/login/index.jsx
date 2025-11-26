@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ViewMain from "@components/view/viewMain";
+import ViewMain from "@components/viewMain";
 import Cookies from "js-cookie";
 import { useNavigate, Link } from "react-router-dom";
 import LogoImage from '@images/logo.png';
@@ -22,7 +22,7 @@ import UserAPI from "../../service/user/user";
 const api = new UserAPI();
 
 export default function Login() {
-  const path = ["Login"];
+  // const path = ["Login"];
   const navigation = useNavigate();
 
   const [email, setEmail] = useState("");

@@ -1,8 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// Pages
-import Example from "./pages/example";
-
 // User
 import Register from "./pages/user/register";
 
@@ -15,6 +12,7 @@ import ListServices from "./pages/services/list";
 
 // Budgets
 import ListBudgets from "./pages/budgets/list";
+import FormBudgets from "./pages/budgets/form";
 
 // Contracts
 import ListContracts from "./pages/contracts/list";
@@ -35,20 +33,18 @@ export default function RoutesProject() {
   
         {/* User */}
         <Route path="/register" element={<Register />} />
-        
-        {/* Example */}
-        <Route path="/exemplo" element={<Example />} />
 
         {/* Clients */}
         <Route path="/clients" element={<ListClients />} />
-        <Route path="/clients/register" element={<ClientRegister />} />
+        <Route path="/clients/:id" element={<ClientRegister />} />
 
         {/* Services */}
         <Route path="/services" element={<ListServices />} />
 
         {/* Budgets */}
         <Route path="/budgets" element={<ListBudgets />} />
-
+        <Route path="/budgets/:id" element={<FormBudgets/>} />
+    
         {/* Contracts */}
         <Route path="/contracts" element={<ListContracts />} />
 

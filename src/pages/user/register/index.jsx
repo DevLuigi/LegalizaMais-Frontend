@@ -1,13 +1,13 @@
-import Button from "../../../components/button";
+import Button from "@components/button";
 import LogoImage from '@images/logo.png';
 import { Container, Logo } from "./styled";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Input from "../../../components/input";
+import Input from "@components/input";
 import { useState } from "react";
 import { Background, Title, AddressBox, GroupButtons } from "./styled";
-import CardBox from "../../../components/cardBox";
-import InputSelect from "../../../components/inputSelect/index.jsx";
+import CardBox from "@components/cardBox";
+import InputSelect from "@components/inputSelect/index.jsx";
 
 import UserAPI from "../../../service/user/user.js";
 const api = new UserAPI();
@@ -108,7 +108,6 @@ export default function Register() {
     };
 
     const response = await api.register(payload);
-    console.log(response)
 
     if (!response || response.status !== 201) {
       const errorMessage =
@@ -120,7 +119,7 @@ export default function Register() {
     }
 
     toast.success("Usuário cadastrado com sucesso!");
-    navigate("/exemplo");
+    navigate("/home");
   }
 
   return (

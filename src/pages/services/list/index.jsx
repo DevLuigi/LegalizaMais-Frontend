@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ViewMain from "../../../components/view/viewMain";
+import ViewMain from "../../../components/viewMain";
 import EmptyPage from "../../../components/emptyPage";
 
 export default function ListServices() {

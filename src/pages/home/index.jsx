@@ -1,5 +1,5 @@
 import Button from "@components/button";
-import ViewMain from "@components/view/viewMain";
+import ViewMain from "@components/viewMain";
 import { Container,Text,GroupButtons } from "./styled";
 import ImageHomePage from '@images/homeImage.png';
 import { useNavigate } from "react-router-dom";

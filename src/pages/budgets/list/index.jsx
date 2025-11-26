@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import ViewMain from "@components/view/viewMain";
+import ViewMain from "@components/viewMain";
 import EmptyPage from "@components/emptyPage";
 import Table from "@components/table";
 import Filter from "@components/filter";
@@ -33,7 +33,7 @@ export default function ListBudgets() {
     popupActions.set("Gerar contrato", () => alert("gerou contrato"));
 
     let tableActions = new Map();
-    tableActions.set("edit", (item) => navigation("/budgets/form/" + item?.id));
+    tableActions.set("edit", (item) => navigation("/budgets/" + item?.id));
     tableActions.set("delete", (item) => showDeleteModal(item?.id));
     tableActions.set("kebab", () => setShowModalActions(true));
 
@@ -56,9 +56,9 @@ export default function ListBudgets() {
             {
                 id: 2,
                 título: "Construção Neo Quimica Arena",
-                cliente: "Andrés sanches fdp",
+                cliente: "Andrés sanches",
                 "CPF/CNPJ": "666.666.666-66",
-                email: "andressanchesfdp@email.com"
+                email: "andressanches@email.com"
             },
             {
                 id: 3,
@@ -110,7 +110,7 @@ export default function ListBudgets() {
                     <Container>
                         <GroupFilterAndButton>
                             <Filter placeholder="Busque por título, cliente ou CNPJ/CPF" value={searchTerm} onChange={setSearchTerm} />
-                            <Button color="blue" onClick={ () => navigation("/budgets/form") }> Adicionar </Button>
+                            <Button color="blue" onClick={ () => navigation("/budgets/0") }> Adicionar </Button>
                         </GroupFilterAndButton>
                         <Table header={header} data={filtered} actions={tableActions} />
                         
