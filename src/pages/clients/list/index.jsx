@@ -10,6 +10,10 @@ import PopupConfirm from "@components/popupConfirm";
 import PopupAction from "@components/popupAction";
 
 import { Container, GroupFilterAndButton } from "./styled";
+import ClientAPI from "../../../service/client/client";
+
+
+const api = new ClientAPI();
 
 export default function ListClients() {
   const [clients, setClients] = useState([]);
@@ -34,39 +38,39 @@ export default function ListClients() {
   //   setShowModalActions(true);
   // });
 
-  
+
   const filteredClients = clients.filter((c) =>
     (c.nome || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
     (c.documento || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
     (c.email || "").toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const loadClients = () => {
-    const mock = [];
+  const listAllClients = async () => {
+    const response = await api.getAllClients();
 
-    for (let i = 1; i <= 9; i++) {
-      mock.push({
-        id: i,
-        nome: `É Lucianoooooo${i}`,
-        documento: "831.884.710-50",
-        endereco: "Rua Tricolor, 6331",
-        telefone: "(11) 999999999",
-        email: `cliente0${i}@email.com`,
-      });
+    if (response.status !== 200) {
+      toast.warn(response.error);
+      console.log(response.message);
+      return;
     }
 
-    setClients(mock);
+    setClients(response.data);
 
     setHeader({
-      id: "id",
+      id: "Id", 
       Nome: "nome",
       "CPF/CNPJ": "documento",
       Endereço: "endereço",
+      DDD: "DDD",
       Telefone: "telefone",
       "E-mail": "email",
-      
+      CEP: "CEP",
+      "Número da residência": "Número da residência",
+      Complemento: "Complemento",
+      "Data da criação do cliente": "Data da criação do cliente"
     });
-  };
+
+  }
 
   const showDeleteModal = (id) => {
     setRowId(id);
@@ -79,10 +83,10 @@ export default function ListClients() {
   };
 
   useEffect(() => {
-    loadClients();
+    listAllClients();
   }, []);
 
-  
+
   return clients.length <= 0 ? (
     <ViewMain path={path}>
       <EmptyPage subject={path[0]} />
@@ -97,7 +101,7 @@ export default function ListClients() {
             onChange={setSearchTerm}
           />
 
-          <Button color="blue" onClick={() => navigation("/clients/")}>
+          <Button color="blue" onClick={() => navigation("/clients/:id")}>
             Adicionar
           </Button>
         </GroupFilterAndButton>

@@ -99,7 +99,7 @@ export default function ClientRegister() {
             addressNumber,
         };
 
-        const response = await api.register(payload);
+        const response = await api.saveClient(payload);
         console.log(response)
 
         if (!response || response.status !== 201) {
