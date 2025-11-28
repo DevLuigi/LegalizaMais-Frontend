@@ -59,8 +59,8 @@ export default function ListClients() {
     setHeader({
       id: "Id", 
       Nome: "nome",
+      "Tipo de pessoa": "Tipo de pessoa",
       "CPF/CNPJ": "documento",
-      Endereço: "endereço",
       DDD: "DDD",
       Telefone: "telefone",
       "E-mail": "email",
