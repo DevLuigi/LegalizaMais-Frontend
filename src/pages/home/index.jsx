@@ -6,13 +6,10 @@ import { useNavigate } from "react-router-dom";
 
 
 export default function Home() {
-    const navigate=useNavigate()
+  const navigate=useNavigate();
 
-  const path = [ "", "" ]; // Caminho que vai aparecer no topo da tela
-
-   
   return (
-    <ViewMain path={path}> 
+    <ViewMain> 
       <Container> 
         
          <Text>

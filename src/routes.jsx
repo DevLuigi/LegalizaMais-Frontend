@@ -29,7 +29,7 @@ export default function RoutesProject() {
       <Routes>
         
         {/* Login */}
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
   
         {/* User */}
         <Route path="/register" element={<Register />} />
@@ -49,7 +49,7 @@ export default function RoutesProject() {
         <Route path="/contracts" element={<ListContracts />} />
 
         {/* Home */}
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );

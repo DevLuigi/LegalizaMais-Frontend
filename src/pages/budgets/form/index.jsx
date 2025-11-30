@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { X } from "lucide-react";
 
 import ViewForm from "@components/viewForm";
 import Button from "@components/Button";
 import PaymentSelector from "@components/paymentSelector";
+import PopupFilterClient from "@components/popupFilterClient";
+import PopupFilterServices from "@components/popupFilterServices";
 
 import { 
     Container, 
@@ -22,37 +27,22 @@ import {
     InputDiscount,
     StyledCombobox
 } from "./styled";
-import { useNavigate } from "react-router-dom";
 
 export default function Form() {
     const navigate = useNavigate();
 
     // const param = useParams().id;
-    const [client, setClient] = useState({ id: 1, name: "Luigi da silva coelho" });
-    const [services, setServices] = useState([
-        { id: 1, label: "Sem serviços" },
-        { id: 2, label: "Troca de tomada" },
-        { id: 3, label: "Construção" },
-        { id: 4, label: "Sem serviços" },
-        { id: 5, label: "Troca de tomada" },
-        { id: 6, label: "Construção" },
-        { id: 7, label: "Sem serviços" },
-        { id: 8, label: "Troca de tomada" },
-        { id: 9, label: "Construção" },
-        { id: 10, label: "Sem serviços" },
-        { id: 11, label: "Troca de tomada" },
-        { id: 12, label: "Construção" },
-    ]);
+    const [client, setClient] = useState({});
+    const [services, setServices] = useState([]);
     const [paymentMethod, setPaymentMethod] = useState(0);
     const [selectedInstallments, setSelectedInstallments] = useState(0);
+    const [showModalClients, setShowModalClients] = useState(false);
+    const [showModalServices, setShowModalServices] = useState(false);
 
     const optionsInstallments = [
         { id: 2, name: "Parcelado em 2x" },
         { id: 4, name: "Parcelado em 4x" },
         { id: 6, name: "Parcelado em 6x" },
-        // { id: 8, name: "Parcelado em 8x" },
-        // { id: 10, name: "Parcelado em 10x" },
-        // { id: 12, name: "Parcelado em 12x" },
     ];
 
     const verifyOperation = () => {
@@ -61,6 +51,11 @@ export default function Form() {
 
     const handleCancel = () => {
         navigate('/budgets');
+    }
+
+    const removeChip = (id) => {
+        const filteredServices = services.filter((item) => item.id !== id);
+        setServices(filteredServices);
     }
 
     useEffect(() => {
@@ -76,18 +71,21 @@ export default function Form() {
                         <Input>
                             <label htmlFor=""> Cliente </label>
                             <div>
-                                <InputClient value={client.name} disabled type="text" />
-                                <ButtonModal> + </ButtonModal>
+                                <InputClient value={client?.name ?? ""} disabled type="text" />
+                                <ButtonModal onClick={() => setShowModalClients(true)}> + </ButtonModal>
                             </div>
                         </Input>
                         <Input>
                             <GroupLabelButton>
                                 <label htmlFor=""> Lista de serviços </label>
-                                <ButtonModal> + </ButtonModal>
+                                <ButtonModal onClick={() => setShowModalServices(true)}> + </ButtonModal>
                             </GroupLabelButton>
                             <GroupServices>
                                 {services.length > 0 ? services.map((item) => (
-                                    <Chip> { item.label } </Chip>
+                                    <div onClick={() => removeChip(item.id)}>
+                                        <Chip> { item.description } </Chip>
+                                        <X size={16}/>
+                                    </div>
                                 )): <></>}
                             </GroupServices>
                         </Input>
@@ -153,6 +151,22 @@ export default function Form() {
                     <Button type="submit" color="blue"> Cadastrar </Button>
                     <Button type="button" color="red" onClick={handleCancel}> Cancelar </Button>
                 </GroupButton>
+
+                {showModalClients && 
+                    <PopupFilterClient 
+                        renderModal={showModalClients} 
+                        setterRender={setShowModalClients} 
+                        onConfirm={setClient} 
+                    />
+                }
+
+                {showModalServices && 
+                    <PopupFilterServices 
+                        renderModal={showModalServices}
+                        setterRender={setShowModalServices}
+                        onConfirm={setServices}
+                    />
+                }
             </Container>
         </ViewForm>
     )

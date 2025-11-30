@@ -5,7 +5,6 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-
     height: 100%;
 `;
 
@@ -14,7 +13,6 @@ const GroupButton = styled.div`
     justify-content: center;
     
     & > button {
-        height: 5vh;
         width: 15vw;
         margin: 1em;
 
@@ -105,10 +103,9 @@ const Chip = styled.div`
     font-weight: bold;
     font-size: 14px;
     width: fit-content;
-    padding: .4em;
+    padding: .5em;
     border-radius: .5em;
-    margin-right: .5em;
-    margin-top: .3em;
+    cursor: pointer;
 `;
 
 const GroupLabelButton = styled.div`
@@ -124,6 +121,35 @@ const GroupServices = styled.div`
     max-height: 10vh;
     overflow-x: hidden;
     margin-top: .5em;
+
+    & > div {
+        display: flex;
+        margin-right: .5em;
+        margin-top: .5em;
+    }
+
+    & > div:hover {
+        margin-right: 0px;
+
+        svg {
+            display: block;
+        }
+    }
+
+    & > div > svg {
+        display: none;
+    }
+
+    & > div > svg {
+        position: relative;
+        left: -8px;
+        top: -5px;
+        background: red;
+        border-radius: .5em;
+        color: white;
+        margin: 0px;
+        cursor: pointer;
+    }
 `;
 
 const TextArea = styled.textarea`
