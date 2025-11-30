@@ -11,27 +11,35 @@ const Container = styled.div`
 
 `;
 const Text= styled.div`
+    display:flex;
+    flex-direction:column;
+    /* align-items:center; */
+    text-align:center;
+    line-height:2em;
+    width:45%;
+    button {
+        width:30%;
+    }
 
-display:flex;
-flex-direction:column;
-/* align-items:center; */
-text-align:center;
-line-height:2em;
-width:45%;
-button{width:30%;}
-p{width:50%;align-self:center;}
-h1{width:45%;align-self:center;}
+    p {
+        width:50%;
+        align-self:center;
+    }
+
+    h1{
+        width:45%;
+        align-self:center;
+    }
 `;
 
 const GroupButtons= styled.div`
+    display: flex;
+    flex-direction:row;
+    justify-content:center;
 
-display: flex;
-flex-direction:row;
-justify-content:center;
-
-&>button:first-child{margin-right:1em}
-
-
+    & > button:first-child {
+        margin-right:1em
+    }
 `
 
-export { Container,Text,GroupButtons };
+export { Container, Text, GroupButtons };

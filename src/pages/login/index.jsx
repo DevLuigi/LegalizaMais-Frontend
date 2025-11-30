@@ -51,7 +51,7 @@ export default function Login() {
     });
 
     toast.success("Login efetuado com sucesso!");
-    navigation("/");
+    navigation("/home");
   };
 
   return (
