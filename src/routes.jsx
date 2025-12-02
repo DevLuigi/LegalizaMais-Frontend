@@ -9,6 +9,7 @@ import ClientRegister from "./pages/clients/register";
 
 // Services
 import ListServices from "./pages/services/list";
+import ServiceRegister from "./pages/services/form";
 
 // Budgets
 import ListBudgets from "./pages/budgets/list";
@@ -40,6 +41,7 @@ export default function RoutesProject() {
 
         {/* Services */}
         <Route path="/services" element={<ListServices />} />
+        <Route path="/services/form" element={<ServiceRegister />} />
 
         {/* Budgets */}
         <Route path="/budgets" element={<ListBudgets />} />

@@ -27,11 +27,17 @@ export default function ListClients() {
   const path = ["Clientes", "Lista de clientes"];
 
   let popupActions = new Map();
-  popupActions.set("Editar cliente", () => navigation("/clients/" + rowId));
+  popupActions.set("Editar cliente", () =>
+    navigation("/clients/register", { state: { client: selectedRowData } })
+  );
+
   popupActions.set("Excluir cliente", () => setShowModalConfirm(true));
 
   let tableActions = new Map();
-  tableActions.set("edit", (item) => navigation("/clients/" + item.id));
+  tableActions.set("edit", (item) =>
+    navigation("/clients/register", { state: { client: item } })
+  );
+
   tableActions.set("delete", (item) => showDeleteModal(item.id));
   // tableActions.set("kebab", (item) => {
   //   setRowId(item.id);
@@ -57,7 +63,7 @@ export default function ListClients() {
     setClients(response.data);
 
     setHeader({
-      id: "Id", 
+      id: "Id",
       Nome: "nome",
       "Tipo de pessoa": "Tipo de pessoa",
       "CPF/CNPJ": "documento",
@@ -77,7 +83,9 @@ export default function ListClients() {
     setShowModalConfirm(true);
   };
 
-  const deleteClient = () => {
+  const deleteClient = async () => {
+    await api.deleteClient(rowId);
+
     alert("Cliente deletado: " + rowId);
     setShowModalConfirm(false);
   };
