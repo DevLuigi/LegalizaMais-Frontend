@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import ViewMain from "@components/viewMain";
 import EmptyPage from "@components/emptyPage";
@@ -11,6 +12,10 @@ import PopupConfirm from "@components/popupConfirm";
 import PopupCombo from "@components/popupCombo";
 
 import { Container, GroupFilterAndButton } from "./styled.js";
+
+import BudgetAPI from "../../../service/budget/budgetService";
+import { toast } from "react-toastify";
+const budgetApi = new BudgetAPI();
 
 export default function ListBudgets() {
     const [budgets, setBudgets] = useState([]);
@@ -26,8 +31,8 @@ export default function ListBudgets() {
     const navigation = useNavigate();
 
     let popupActions = new Map();
-    popupActions.set("Enviar por whatsapp", () => alert("enviou por whatsapp"));
-    popupActions.set("Enviar por E-mail", () => alert("enviar por e-mail"));
+    // popupActions.set("Enviar por whatsapp", () => alert("enviou por whatsapp"));
+    // popupActions.set("Enviar por E-mail", () => alert("enviar por e-mail"));
     popupActions.set("Baixar o PDF", () => alert("baixou PDF"));
     popupActions.set("Alterar status do orçamento", () => setShowModalCombo(true));
     popupActions.set("Gerar contrato", () => alert("gerou contrato"));
@@ -44,31 +49,19 @@ export default function ListBudgets() {
             budget["CPF/CNPJ"]?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const listBudgets = () => {
-        setBudgets([
-            {
-                id: 1,
-                título: "Pintura de parede",
-                cliente: "Cacanabis ancião",
-                "CPF/CNPJ": "831.884.710-50",
-                email: "clienteTeste@email.com"
-            },
-            {
-                id: 2,
-                título: "Construção Neo Quimica Arena",
-                cliente: "Andrés sanches",
-                "CPF/CNPJ": "666.666.666-66",
-                email: "andressanches@email.com"
-            },
-            {
-                id: 3,
-                título: "Quarto do timão",
-                cliente: "Luigi",
-                "CPF/CNPJ": "123.456.789-10",
-                email: "luigidasilvacoelho@gmail.com"
-            }
-        ]);
+    const listBudgets = async () => {
+        const response = await budgetApi.getAll();
 
+        // retira campos desnecessários
+        const finalResponse = response.data.map((budget) => ({
+            id: budget.id,
+            Título: budget.title,
+            cliente: budget.client.name,
+            "CPF/CNPJ": budget.client.document,
+            email: budget.client.email
+        }));
+
+        setBudgets(finalResponse);
         setHeader({
                 id: 1,
                 título: "Pintura de parede",
@@ -88,7 +81,7 @@ export default function ListBudgets() {
     }
 
     const alterBudgetStatus = () => {
-        alert('Alterou status do orçamento para: ' + budgetStatus);
+        toast.success(`Status do orçamento alterado com sucesso para ${budgetStatus === 2 ? "Aprovado" : "Reprovado"}!`);
     }
 
     useEffect(() => {

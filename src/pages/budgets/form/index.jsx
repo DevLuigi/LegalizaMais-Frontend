@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { X } from "lucide-react";
+import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 
 import ViewForm from "@components/viewForm";
@@ -31,9 +32,13 @@ import {
 
 import ClientAPI from "../../../service/client/client";
 import UserAPI from "../../../service/user/user";
+import ContractApi from "../../../service/budget/budgetService";
+import BudgetItemApi from "../../../service/budgetItem/budgetItem";
 
 const clientApi = new ClientAPI();
 const userApi = new UserAPI();
+const contractApi = new ContractApi();
+const budgetItemApi = new BudgetItemApi();
 
 export default function Form() {
     const navigate = useNavigate();
@@ -51,7 +56,7 @@ export default function Form() {
     const [discountPercentage, setDiscountPercentage] = useState("");
     const [profit, setProfit] = useState("");
     const [paymentMethod, setPaymentMethod] = useState(0);
-    const [selectedInstallments, setSelectedInstallments] = useState("");
+    const [selectedInstallments, setSelectedInstallments] = useState("Parcelado em 2x");
    
     const [showModalClients, setShowModalClients] = useState(false);
     const [showModalServices, setShowModalServices] = useState(false);
@@ -64,15 +69,15 @@ export default function Form() {
     ];
 
     const saveBudget =  async () => {
-        const inclusionDate =  "2025-12-01T21:32:26.3592473";
+        const inclusionDate = new Date();
         const changeDate = null;
         const inactive = false;
 
-        const userLoggedClient = Cookies.get("user-logged-client");
-
-        const client = await clientApi.getClientById(client.id);
-        const user = await userApi.getUserById(userLoggedClient.id); 
+        const userLoggedClient = JSON.parse(Cookies.get("user-logged-client"));
         
+        const clientData = await clientApi.getClientById(client?.id);
+        const userData = await userApi.getUserById(userLoggedClient?.id); 
+
         const request = {
             title,
             descriptionService,
@@ -83,16 +88,38 @@ export default function Form() {
             total,
             discountPercentage,
             profit,
-            paymentMethod,
+            paymentMethod: paymentMethod - 1,
             "paymentDescription": selectedInstallments,
-            client,
-            user,
+            client: clientData.data,
+            user: userData.data,
             inclusionDate,
             changeDate,
             inactive
         }
 
-        console.log(request);
+        const response = await contractApi.save(request);
+        if (!response || response.status !== 201) {
+            toast.error(response.error);
+            return;
+        }
+
+        services.forEach(async service => {
+            await budgetItemApi.save({
+                budget: response.data,
+                service: service,
+                user: userData.data,
+                inclusionDate,
+                changeDate,
+                inactive
+            })
+        });
+
+        toast.success("Orçamento cadastrado com sucesso!");
+        navigate("/budgets");
+    }
+
+    const calcTotalProfit = () => {
+        setProfit(total * (1 - (discountPercentage / 100)));
     }
 
     const handleCancel = () => {
@@ -129,7 +156,7 @@ export default function Form() {
                             <GroupServices>
                                 {services.length > 0 ? services.map((item) => (
                                     <div onClick={() => removeChip(item.id)}>
-                                        <Chip> { item.title } </Chip>
+                                        <Chip> { item.Título } </Chip>
                                         <X size={16}/>
                                     </div>
                                 )): <></>}
@@ -170,14 +197,14 @@ export default function Form() {
                             </InputTotal>
                             <InputDiscount>
                                 <label htmlFor=""> Desconto (%) </label>
-                                <input value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)} type="text" />
+                                <input onBlur={() => calcTotalProfit()} value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)} type="text" />
                             </InputDiscount>
                         </AlignInputs>
                         <Input>
                             <label htmlFor=""> Valor lucro </label>
                             <input value={profit} onChange={(e) => setProfit(e.target.value)} type="text" disabled={true} />
                         </Input>
-                        <PaymentSelector value={paymentMethod} onChange={setPaymentMethod} />
+                        <PaymentSelector value={paymentMethod} onChange={setPaymentMethod} onChangeInstallments={setSelectedInstallments}/>
                         {paymentMethod === 1 
                             ? 
                                 <StyledCombobox
