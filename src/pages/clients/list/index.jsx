@@ -28,14 +28,14 @@ export default function ListClients() {
 
   let popupActions = new Map();
   popupActions.set("Editar cliente", () =>
-    navigation("/clients/register", { state: { client: selectedRowData } })
+    navigation("/clients/form", { state: { client: selectedRowData } })
   );
 
   popupActions.set("Excluir cliente", () => setShowModalConfirm(true));
 
   let tableActions = new Map();
   tableActions.set("edit", (item) =>
-    navigation("/clients/register", { state: { client: item } })
+    navigation("/clients/form", { state: { client: item } })
   );
 
   tableActions.set("delete", (item) => showDeleteModal(item.id));

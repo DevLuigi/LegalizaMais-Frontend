@@ -9,8 +9,8 @@ import { Background, Title, AddressBox, GroupButtons } from "./styled";
 import CardBox from "@components/cardBox";
 import InputSelect from "@components/inputSelect/index.jsx";
 
-import UserAPI from "../../../service/user/user.js";
-const api = new UserAPI();
+import ClientAPI from "../../../service/client/client.js";
+const api = new ClientAPI();
 
 import TermsModal from "@components/popupTerms/index.jsx"; // <- novo
 
@@ -24,8 +24,6 @@ export default function Register() {
   const [ddd, setDdd] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [cep, setCep] = useState("");
   const [addressComplement, setAddressComplement] = useState("");
   const [addressNumber, setAddressNumber] = useState("");
@@ -82,18 +80,13 @@ export default function Register() {
   const limitCep = (value) => value.replace(/\D/g, "").slice(0, 8);
 
   async function register() {
-    if (!name || !document || !personType || !ddd || !phone || !email || !password || !confirmPassword || !cep || !addressComplement || !addressNumber) {
+    if (!name || !document || !personType || !ddd || !phone || !email || !cep || !addressComplement || !addressNumber) {
       toast.error("Preencha todos os campos!");
       return;
     }
 
     if (isInvalidEmail()) {
       toast.error("E-mail inválido!");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      toast.error("As senhas não coincidem!");
       return;
     }
 
@@ -110,13 +103,12 @@ export default function Register() {
       ddd,
       phone,
       email,
-      password,
       cep,
       addressComplement,
       addressNumber,
     };
 
-    const response = await api.register(payload);
+    const response = await api.saveClient(payload);
 
     if (!response || response.status !== 201) {
       const errorMessage =
@@ -127,8 +119,8 @@ export default function Register() {
       return;
     }
 
-    toast.success("Usuário cadastrado com sucesso!");
-    navigate("/home");
+    toast.success("Cliente cadastrado com sucesso!");
+    navigate("/clients");
   }
 
   return (
@@ -136,7 +128,7 @@ export default function Register() {
       <Logo src={LogoImage} alt="Logo" />
       <CardBox>
         <Container>
-          <Title>Cadastro de Usuário</Title>
+          <Title>Cadastro de Cliente</Title>
 
           <section id="dataSection">
 
@@ -163,6 +155,12 @@ export default function Register() {
                   />
                 </div>
               </div>
+            </div>
+
+            <div id="rightData">
+              <div id="email">
+                <Input label="E-mail" value={email} onChange={setEmail} placeholder="Digite seu email" width="93%" />
+              </div>
 
               <div id="phone">
                 <div className="gridPhone">
@@ -179,34 +177,6 @@ export default function Register() {
                     onChange={(v) => setPhone(limitPhone(v))}
                     placeholder="Digite seu telefone (Apenas números)"
                     width="60%"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div id="rightData">
-              <div id="email">
-                <Input label="E-mail" value={email} onChange={setEmail} placeholder="Digite seu email" width="93%" />
-              </div>
-
-              <div id="password">
-                <div className="row">
-                  <Input
-                    label="Senha"
-                    type="password"
-                    value={password}
-                    onChange={setPassword}
-                    placeholder="Crie uma senha"
-                    width="170%"
-                  />
-
-                  <Input
-                    label="Confirmar Senha"
-                    type="password"
-                    value={confirmPassword}
-                    onChange={setConfirmPassword}
-                    placeholder="Repita sua senha"
-                    width="170%"
                   />
                 </div>
               </div>
@@ -280,7 +250,7 @@ export default function Register() {
 
           <GroupButtons>
             <Button color="blue" onClick={register}>Cadastrar</Button>
-            <Button color="red" onClick={() => navigate("/")}>Cancelar</Button>
+            <Button color="red" onClick={() => navigate("/clients")}>Cancelar</Button>
           </GroupButtons>
 
         </Container>
