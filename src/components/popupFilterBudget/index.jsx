@@ -34,7 +34,8 @@ const customStyles = {
 export default function PopupFilterBudget({ renderModal, setterRender, onConfirm }) {
   const [header, setHeader] = useState({
     id: 1,
-    titulo: "titulo"
+    titulo: "titulo",
+    idUsuario: "id usuario"
   });
 
   const [budgets, setBudgets] = useState([]);
@@ -54,7 +55,6 @@ export default function PopupFilterBudget({ renderModal, setterRender, onConfirm
 
 
   const searchClient = async () => {
-    debugger;
     const budgetsResponse = await budgetApi.getAllByUserId(client.id);
 
     const finalResponse = budgetsResponse.data.map((budget) => ({

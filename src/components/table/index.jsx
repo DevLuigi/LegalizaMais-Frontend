@@ -52,7 +52,7 @@ export default function Table({ actions, data, header }) {
 
                     {actions?.has("PDF") && (
                       <ActionButton color="#1976d2">
-                        <FileText size={16} onClick={() => actions.get('PDF')()} />
+                        <FileText size={16} onClick={() => actions.get('PDF')(item)} />
                       </ActionButton>
                     )}
 
