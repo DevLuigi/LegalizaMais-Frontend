@@ -33,9 +33,9 @@ export default function ListBudgets() {
     let popupActions = new Map();
     // popupActions.set("Enviar por whatsapp", () => alert("enviou por whatsapp"));
     // popupActions.set("Enviar por E-mail", () => alert("enviar por e-mail"));
-    popupActions.set("Baixar o PDF", () => alert("baixou PDF"));
+    // popupActions.set("Baixar o PDF", () => alert("baixou PDF"));
     popupActions.set("Alterar status do orçamento", () => setShowModalCombo(true));
-    popupActions.set("Gerar contrato", () => alert("gerou contrato"));
+    popupActions.set("Gerar contrato", () => navigation("/contracts/0"));
 
     let tableActions = new Map();
     tableActions.set("edit", (item) => navigation("/budgets/" + item?.id));
