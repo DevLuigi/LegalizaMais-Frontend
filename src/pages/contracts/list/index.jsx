@@ -31,7 +31,7 @@ export default function ListContracts() {
     let tableActions = new Map();
     tableActions.set("PDF", (item) => {
         const constract = typesContracts.filter(itemType => itemType.fileName == item.tipo);
-        generateContract({ page: constract[0].module.default, fileName: constract[0].fileName || 'Contrato' })
+        generateContract({ datas: item, page: constract[0].module.default, fileName: constract[0].fileName || 'Contrato' })
     });
 
     const filtered = contracts?.filter(

@@ -17,78 +17,35 @@ const styles = StyleSheet.create({
 });
 
 export default function ContractPDF02(props) {
-    const {
-        titleBudget,
-
-        // Dados das partes
-        contratante,
-        cnpjContratante,
-        enderecoContratante,
-        contratado,
-        cnpjContratado,
-        enderecoContratado,
-
-        // Dados do objeto e obra
-        descricaoImovel,
-        enderecoObra,
-        servicosExecutados,
-        materiaisInclusos,
-
-        // Prazos
-        prazoExecucaoDias,
-        dataInicioObra,
-
-        // Valores
-        valorTotal,
-        valorEntrada,
-        dataEntrada,
-        valorParcela2,
-        dataParcela2,
-        valorParcela3,
-        periodoParcela3,
-        engenheiroResponsavel,
-
-        // Responsabilidade técnica
-        garantiaViciosMeses,
-
-        // Dados de rescisão e multa
-        multaPercentual,
-
-        // Assinatura
-        dataAssinatura,
-        testemunha1,
-        testemunha2
-    } = props;
-
+    
     return (
         <Document>
             <Page size="A4" style={styles.page}>
 
-                <Text style={styles.title}>{titleBudget}</Text>
+                <Text style={styles.title}>{props.budget.title}</Text>
 
                 <Text style={styles.section}>
                     Pelo presente instrumento particular de contrato de prestação de serviço celebrado
-                    entre {contratante}, inscrita no CNPJ sob nº {cnpjContratante}, localizada em
-                    {` ${enderecoContratante}`}, e de outro lado o contratado {contratado},
-                    inscrito no CNPJ nº {cnpjContratado}, residente em {enderecoContratado}.
+                    entre {props.client.name}, inscrita no CNPJ sob nº {props.client.document}, localizada em
+                    {` ${props.client.cep}`}, e de outro lado o contratado {props.budget.user.name},
+                    inscrito no CNPJ nº {props.budget.user.document}, residente em {props.budget.user.cep}.
                 </Text>
 
                 <Text style={styles.section}>
-                    Têm entre os mesmos, de maneira justa e acordada, o presente {titleBudget},
+                    Têm entre os mesmos, de maneira justa e acordada, o presente {props.budget.title},
                     ficando desde já aceito pelas cláusulas abaixo descritas.
                 </Text>
 
                 {/* CLÁUSULA 1 */}
                 <Text style={styles.bold}>CLÁUSULA 1 - OBJETO DO CONTRATO</Text>
                 <Text style={styles.section}>
-                    O presente contrato tem como objeto o conserto do vazamento do imóvel comercial
-                    {` ${descricaoImovel}`}, localizado em {enderecoObra}.
+                    O presente contrato tem como objeto {props.budget.descriptionService}, localizado em {props.client.cep}.
                 </Text>
 
                 <Text style={styles.section}>
                     PARÁGRAFO PRIMEIRO: A manutenção será executada nos exatos termos do que consta:
-                    {` ${servicosExecutados}`}. Os materiais para a resolução do vazamento estão incluídos no orçamento,
-                    sendo de responsabilidade do contratado – {materiaisInclusos}.
+                    {props.budget.descriptionService}. Os materiais para a resolução do vazamento estão incluídos no orçamento,
+                    sendo de responsabilidade do contratado – {props.budget.usedMaterials}.
                 </Text>
 
                 <Text style={styles.section}>
@@ -99,8 +56,7 @@ export default function ContractPDF02(props) {
                 {/* CLÁUSULA 2 */}
                 <Text style={styles.bold}>CLÁUSULA 2 - PRAZO PARA EXECUÇÃO</Text>
                 <Text style={styles.section}>
-                    O empreiteiro se compromete a executar a obra em {prazoExecucaoDias} dias,
-                    iniciando-se no primeiro dia útil após {dataInicioObra}.
+                    O empreiteiro se compromete a executar a obra em {props.budget.daysOfService} dias.
                 </Text>
 
                 <Text style={styles.section}>
@@ -134,7 +90,7 @@ export default function ContractPDF02(props) {
 
                 <Text style={styles.section}>
                     PARÁGRAFO QUINTO: O empreiteiro se responsabilizará pelos vícios de construção
-                    por {garantiaViciosMeses} meses após a conclusão.
+                    por 3 meses após a conclusão.
                 </Text>
 
                 <Text style={styles.section}>
@@ -145,14 +101,7 @@ export default function ContractPDF02(props) {
                 {/* CLÁUSULA 4 */}
                 <Text style={styles.bold}>CLÁUSULA 4 - PREÇO E FORMA DE PAGAMENTO</Text>
                 <Text style={styles.section}>
-                    O contratante pagará o valor total de R$ {valorTotal}.
-                </Text>
-
-                <Text style={styles.section}>
-                    Entrada: R$ {valorEntrada} – {dataEntrada}.{"\n"}
-                    Segunda parcela: R$ {valorParcela2} – {dataParcela2}.{"\n"}
-                    Terceira parcela: R$ {valorParcela3} – {periodoParcela3}.{"\n"}
-                    Pagamento mediante aprovação do Engenheiro {engenheiroResponsavel}.
+                    O contratante pagará o valor total de R$ {props.budget.total}.
                 </Text>
 
                 {/* CLÁUSULA 5 */}
@@ -170,7 +119,7 @@ export default function ContractPDF02(props) {
                 {/* CLÁUSULA 7 */}
                 <Text style={styles.bold}>CLÁUSULA 7 - DA MULTA</Text>
                 <Text style={styles.section}>
-                    O descumprimento acarretará multa de {multaPercentual}% sobre o valor total do contrato.
+                    O descumprimento acarretará multa de 50% sobre o valor total do contrato.
                 </Text>
 
                 {/* DISPOSIÇÕES FINAIS */}
@@ -181,13 +130,13 @@ export default function ContractPDF02(props) {
                 </Text>
 
                 <Text style={styles.section}>
-                    São Paulo, {dataAssinatura}
+                    São Paulo, {props.inclusionDate}
                 </Text>
 
                 <Text style={styles.section}>
                     Testemunhas:{"\n"}
-                    1. {testemunha1}{"\n"}
-                    2. {testemunha2}
+                    1. {props.budget.user.name}{"\n"}
+                    2. {props.client.name}
                 </Text>
 
             </Page>
