@@ -6,7 +6,7 @@ import {
     FakeCheckbox
 } from "./styled";
 
-export default function PaymentSelector({ value, onChange }) {
+export default function PaymentSelector({ value, onChange, onChangeInstallments }) {
 
   const options = [
     { value: 1, label: "Cartão de crédito" },
@@ -14,13 +14,20 @@ export default function PaymentSelector({ value, onChange }) {
     { value: 3, label: "Pix" },
   ];
 
+  const changeValues = (opt) => {
+    onChange(opt.value);
+    if (opt.value !== 1) {
+      onChangeInstallments(""); 
+    }
+  }
+
   return (
     <Container>
       <Title>Formas de pagamento</Title>
 
       <OptionsGrid>
         {options.map((opt) => (
-          <Option key={opt.value} onClick={() => onChange(opt.value)}>
+          <Option key={opt.value} onClick={() => changeValues(opt)}>
             <FakeCheckbox checked={value === opt.value} />
             <label>{opt.label}</label>
           </Option>
