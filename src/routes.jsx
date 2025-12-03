@@ -17,6 +17,7 @@ import FormBudgets from "./pages/budgets/form";
 
 // Contracts
 import ListContracts from "./pages/contracts/list";
+import FormContracts from "./pages/contracts/form";
 
 // Login
 import Login from "./pages/login";
@@ -49,6 +50,7 @@ export default function RoutesProject() {
     
         {/* Contracts */}
         <Route path="/contracts" element={<ListContracts />} />
+        <Route path="/contracts/:id" element={<FormContracts />} />
 
         {/* Home */}
         <Route path="/home" element={<Home />} />

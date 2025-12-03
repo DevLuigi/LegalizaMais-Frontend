@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.3.1",
     "axios": "^1.12.2",
+    "file-saver": "^2.0.5",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.553.0",
     "react": "^19.1.1",
