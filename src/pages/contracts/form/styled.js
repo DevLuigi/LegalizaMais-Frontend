@@ -10,7 +10,7 @@ const ColumnInput = styled.div`
     flex-direction: column;
     
     height: 100%;
-    width: 35%;
+    width: 40%;
 `;
 
 const Input = styled.div`

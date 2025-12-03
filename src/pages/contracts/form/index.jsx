@@ -69,7 +69,7 @@ export default function ListBudgets() {
             inactive: false
         };
         api.save(contract);
-        generateContract({ page: pageSelected.module.default, fileName: pageSelected.fileName || 'Contrato' });
+        generateContract({ datas: contract, page: pageSelected.module.default, fileName: pageSelected.fileName || 'Contrato' });
         navigation("/contracts");
         toast.success("Contrato gerado com sucesso!");
     }

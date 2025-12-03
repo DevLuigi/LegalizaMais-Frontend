@@ -17,17 +17,7 @@ const styles = StyleSheet.create({
 });
 
 export default function ContractPDF(props) {
-    const {
-        contratante,
-        cnpjContratante,
-        enderecoContratante,
-        contratado,
-        cnpjContratado,
-        enderecoContratado,
-        valorTotal,
-        dataAssinatura
-    } = props;
-
+    
     return (
         <Document>
             <Page size="A4" style={styles.page}>
@@ -38,36 +28,36 @@ export default function ContractPDF(props) {
 
                 <Text style={styles.section}>
                     Pelo presente instrumento particular de contrato de prestação de serviço celebrado entre
-                    {` ${contratante}`} – inscrita no CNPJ sob nº {cnpjContratante}, localizada em
-                    {` ${enderecoContratante}`} e de outro lado o contratado {contratado},
-                    inscrito no CNPJ {cnpjContratado}, residente em {enderecoContratado}.
+                    {` ${props.client.name}`} – inscrita no CNPJ sob nº {props.client.document}, localizada em
+                    {` ${props.client.cep}`} e de outro lado o contratado {props.budget.user.name},
+                    inscrito no CNPJ {props.budget.user.document}, residente em {props.budget.user.cep}.
                 </Text>
 
                 <Text style={styles.section}>
-                    Têm entre os mesmos, de maneira justa e acordada, o presente contrato de reforma de telhado,
+                    Têm entre os mesmos, de maneira justa e acordada, o presente contrato de {props.budget.descriptionService},
                     ficando desde já aceito pelas cláusulas abaixo descritas.
                 </Text>
 
                 <Text style={styles.bold}>CLÁUSULA 1 - OBJETO DO CONTRATO</Text>
                 <Text style={styles.section}>
-                    O presente contrato tem como objeto o conserto do vazamento do imóvel comercial...
+                    O presente contrato tem como objeto o serviço de {props.budget.descriptionService}, conforme orçamento
+                    aprovado pelas partes.
                 </Text>
 
                 <Text style={styles.bold}>CLÁUSULA 4 - PREÇO E FORMA DE PAGAMENTO</Text>
                 <Text style={styles.section}>
                     A título de mão de obra, fica ajustado que o contratante pagará ao contratado o valor total
-                    de R$ {valorTotal}.
+                    de R$ {props.budget.total}.
                 </Text>
 
                 <Text style={styles.section}>
-                    São Paulo, {dataAssinatura}
+                    São Paulo, {props.inclusionDate}
                 </Text>
 
                 <Text style={{ marginTop: 40 }}>___________________________</Text>
-                <Text>{contratante}</Text>
-
+                <Text>{props.client.name}</Text>
                 <Text style={{ marginTop: 40 }}>___________________________</Text>
-                <Text>{contratado}</Text>
+                <Text>{props.budget.user.name}</Text>
 
             </Page>
         </Document>
