@@ -9,6 +9,9 @@ import Modal from "react-modal";
 
 import { Container, Title, Input, GroupButtons } from "./styled";
 
+import ClientAPI from "../../service/client/client";
+const clientApi = new ClientAPI();
+
 const customStyles = {
   content: {
     top: "50%",
@@ -30,9 +33,9 @@ const customStyles = {
 export default function PopupFilterClient({ renderModal, setterRender, onConfirm }) {
   const [header, setHeader] = useState({
         id: 1,
-        name: "Cliente Teste 1",
-        "CNPJ/CPF": "123.456.789-00",
-        "E-mail": "teste1@email.com"
+        name: "name",
+        "CNPJ/CPF": "000.000.000-00",
+        "E-mail": "email@email.com"
   });
 
   const [clients, setClients] = useState([]);
@@ -41,34 +44,18 @@ export default function PopupFilterClient({ renderModal, setterRender, onConfirm
   let tableActions = new Map();
   tableActions.set("none", () => {});
 
-  const searchClient = () => {
-    setClients([
-      {
-        id: 1,
-        name: "Luigi da silva coelho",
-        "CNPJ/CPF": "123.456.789-00",
-        "E-mail": "luigi@email.com"
-      },
-      {
-        id: 2,
-        name: "kaio da silva coelho",
-        "CNPJ/CPF": "123.456.789-00",
-        "E-mail": "kaio@email.com"
-      },
-      {
-        id: 3,
-        name: "Cacanabis da fiel",
-        "CNPJ/CPF": "123.456.789-00",
-        "E-mail": "cacanabis@email.com"
-      }
-    ]);
+  const searchClient = async () => {
+    const clientsResponse = await clientApi.getAllClients();
+    
+    // retira campos desnecessários
+    const finalResponse = clientsResponse.data.map((client) => ({
+      id: client.id,
+      name: client.name,
+      "CNPJ/CPF": client.document,
+      "E-mail": client.email
+    }));
 
-    setHeader({
-        id: 1,
-        name: "Cliente Teste 1",
-        "CNPJ/CPF": "123.456.789-00",
-        "E-mail": "teste1@email.com"
-    });
+    setClients(finalResponse);
   }
 
   const closeModal = () => {

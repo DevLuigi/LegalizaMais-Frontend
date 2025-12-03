@@ -80,7 +80,7 @@ const TableRow = styled.tr`
 const TableData = styled.td`
   padding: 12px 16px;
   color: #333;
-  text-align: left;
+  text-align: center;
   border-bottom: 1px solid #e5e7eb;
   white-space: nowrap;
 `;

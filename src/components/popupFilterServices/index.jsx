@@ -9,6 +9,9 @@ import Modal from "react-modal";
 
 import { Container, Title, Input, GroupButtons } from "./styled";
 
+import ServiceApi from "../../service/workService/workService";
+const serviceApi = new ServiceApi();
+
 const customStyles = {
   content: {
     top: "50%",
@@ -30,8 +33,8 @@ const customStyles = {
 export default function PopupFilterServices({ renderModal, setterRender, onConfirm }) {
   const [header, setHeader] = useState({
         id: 1,
-        description: "Serviço",
-        suggestedValue: 100.50
+        Título: "Serviço",
+        "Valor sugerido": 100.50
   });
 
   const [services, setServices] = useState([]);
@@ -40,30 +43,17 @@ export default function PopupFilterServices({ renderModal, setterRender, onConfi
   let tableActions = new Map();
   tableActions.set("none", () => {});
 
-  const searchService = () => {
-    setServices([
-      {
-        id: 1,
-        description: "Pintura de parede",
-        suggestedValue: 100.50
-      },
-      {
-        id: 2,
-        description: "Reforma elétrica",
-        suggestedValue: 200.75
-      },
-      {
-        id: 3,
-        description: "Instalação hidráulica",
-        suggestedValue: 50.25
-      }
-    ]);
+  const searchService = async () => {
+    const response = await serviceApi.getAllServices();
+    
+    // retira campos desnecessários
+    const finalResponse = response.data.map((client) => ({
+      id: client.id,
+      Título: client.title,
+      "Valor sugerido": client.suggestedValue
+    }));
 
-    setHeader({
-        id: 1,
-        description: "Serviço",
-        suggestedValue: 100.50
-    });
+    setServices(finalResponse);
   }
 
   const closeModal = () => {

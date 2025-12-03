@@ -124,20 +124,17 @@ const GroupServices = styled.div`
 
     & > div {
         display: flex;
-        margin-right: .5em;
         margin-top: .5em;
     }
 
     & > div:hover {
-        margin-right: 0px;
-
         svg {
-            display: block;
+            opacity: 1;
         }
     }
 
     & > div > svg {
-        display: none;
+        opacity: 0;
     }
 
     & > div > svg {

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { X } from "lucide-react";
+import Cookies from "js-cookie";
 
 import ViewForm from "@components/viewForm";
 import Button from "@components/Button";
@@ -28,16 +29,33 @@ import {
     StyledCombobox
 } from "./styled";
 
+import ClientAPI from "../../../service/client/client";
+import UserAPI from "../../../service/user/user";
+
+const clientApi = new ClientAPI();
+const userApi = new UserAPI();
+
 export default function Form() {
     const navigate = useNavigate();
 
-    // const param = useParams().id;
     const [client, setClient] = useState({});
     const [services, setServices] = useState([]);
+
+    const [title, setTitle] = useState("");
+    const [descriptionService, setDescriptionService] = useState("");
+    const [usedMaterials, setUsedMaterials] = useState("");
+    const [daysOfService, setDaysOfService] = useState("");
+    const [quantityOfHelpers, setQuantityOfHelpers] = useState("");
+    const [dailyRateHelper, setDailyRateHelper] = useState("");
+    const [total, setTotal] = useState("");
+    const [discountPercentage, setDiscountPercentage] = useState("");
+    const [profit, setProfit] = useState("");
     const [paymentMethod, setPaymentMethod] = useState(0);
-    const [selectedInstallments, setSelectedInstallments] = useState(0);
+    const [selectedInstallments, setSelectedInstallments] = useState("");
+   
     const [showModalClients, setShowModalClients] = useState(false);
     const [showModalServices, setShowModalServices] = useState(false);
+    
 
     const optionsInstallments = [
         { id: 2, name: "Parcelado em 2x" },
@@ -45,8 +63,36 @@ export default function Form() {
         { id: 6, name: "Parcelado em 6x" },
     ];
 
-    const verifyOperation = () => {
+    const saveBudget =  async () => {
+        const inclusionDate =  "2025-12-01T21:32:26.3592473";
+        const changeDate = null;
+        const inactive = false;
+
+        const userLoggedClient = Cookies.get("user-logged-client");
+
+        const client = await clientApi.getClientById(client.id);
+        const user = await userApi.getUserById(userLoggedClient.id); 
         
+        const request = {
+            title,
+            descriptionService,
+            usedMaterials,
+            daysOfService,
+            quantityOfHelpers,
+            dailyRateHelper,
+            total,
+            discountPercentage,
+            profit,
+            paymentMethod,
+            "paymentDescription": selectedInstallments,
+            client,
+            user,
+            inclusionDate,
+            changeDate,
+            inactive
+        }
+
+        console.log(request);
     }
 
     const handleCancel = () => {
@@ -59,11 +105,11 @@ export default function Form() {
     }
 
     useEffect(() => {
-        verifyOperation();
-    })
+
+    }, [])
 
     return(
-        <ViewForm onSubmit={verifyOperation} height={"90vh"} width={"70vw"}>
+        <ViewForm onSubmit={saveBudget} height={"90vh"} width={"70vw"}>
             <Container>
                 <Title> Cadastro </Title>
                 <GroupInput>
@@ -83,7 +129,7 @@ export default function Form() {
                             <GroupServices>
                                 {services.length > 0 ? services.map((item) => (
                                     <div onClick={() => removeChip(item.id)}>
-                                        <Chip> { item.description } </Chip>
+                                        <Chip> { item.title } </Chip>
                                         <X size={16}/>
                                     </div>
                                 )): <></>}
@@ -91,45 +137,45 @@ export default function Form() {
                         </Input>
                         <Input>
                             <label htmlFor=""> Titulo do orçamento </label>
-                            <input type="text" />
+                            <input value={title} onChange={(e) => setTitle(e.target.value)} type="text" />
                         </Input>
                         <Input>
                             <label htmlFor=""> Descrição dos serviços </label>
-                            <TextArea />
+                            <TextArea value={descriptionService} onChange={(e) => setDescriptionService(e.target.value)} />
                         </Input>
                         <Input>
                             <label htmlFor=""> Materiais usados </label>
-                            <TextArea />
+                            <TextArea value={usedMaterials} onChange={(e) => setUsedMaterials(e.target.value)} />
                         </Input>
                     </ColumnInput>
                     <ColumnInput>
                         <AlignInputs>
                             <Input>
                                 <label htmlFor=""> Qtd. Dias serviço </label>
-                                <input type="text" />
+                                <input value={daysOfService} onChange={(e) => setDaysOfService(e.target.value)} type="text" />
                             </Input>
                             <Input>
                                 <label htmlFor=""> Qtd. Ajudantes </label>
-                                <input type="text" />
+                                <input value={quantityOfHelpers} onChange={(e) => setQuantityOfHelpers(e.target.value)} type="text" />
                             </Input>
                         </AlignInputs>
                         <Input>
                             <label htmlFor=""> Valor diaria ajudante </label>
-                            <input type="text" />
+                            <input value={dailyRateHelper} onChange={(e) => setDailyRateHelper(e.target.value)} type="text" />
                         </Input>
                         <AlignInputs>
                             <InputTotal>
                                 <label htmlFor=""> Valor total </label>
-                                <input type="text" />
+                                <input value={total} onChange={(e) => setTotal(e.target.value)} type="text" />
                             </InputTotal>
                             <InputDiscount>
                                 <label htmlFor=""> Desconto (%) </label>
-                                <input type="text" />
+                                <input value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)} type="text" />
                             </InputDiscount>
                         </AlignInputs>
                         <Input>
                             <label htmlFor=""> Valor lucro </label>
-                            <input type="text" disabled={true} />
+                            <input value={profit} onChange={(e) => setProfit(e.target.value)} type="text" disabled={true} />
                         </Input>
                         <PaymentSelector value={paymentMethod} onChange={setPaymentMethod} />
                         {paymentMethod === 1 
@@ -137,7 +183,7 @@ export default function Form() {
                                 <StyledCombobox
                                     data={optionsInstallments}
                                     value={optionsInstallments.find(o => o.id === selectedInstallments)}
-                                    onChange={(e) => setSelectedInstallments(e.id)}
+                                    onChange={(e) => setSelectedInstallments(e.name)}
                                     dataKey='id'
                                     textField='name'
                                     defaultValue={2}
