@@ -13,6 +13,10 @@ export default class ContractApi extends ServiceBase {
         return await super.get(`/${id}`);
     }
 
+    async getById(id) {
+        return await super.get(`/idBudget/${id}`);
+    }
+
     async save(body) {
         return await super.post('', body);
     }

@@ -18,43 +18,62 @@ import Cookies from "js-cookie";
 import {useEffect, useState} from "react";
 import PopupFilterClient from "@components/popupFilterClient/index.jsx";
 import {ButtonModal, InputClient} from "../../budgets/form/styled.js";
-import apiService from "../../../service/contract/contractService.js"
-import budgetService from "../../../service/budget/budgetService.js"
+import apiService from "../../../service/contract/contractService.js";
+import budgetService from "../../../service/budget/budgetService.js";
+import typeContractService from "../../../service/typeContract/typeContractService.js";
 import PopupFilterBudget from "@components/popupFilterBudget/index.jsx";
 
 export default function ListBudgets() {
     const api = new apiService();
     const apiBudget = new budgetService();
-    const [pageSelected, setPageSelected] = useState({default: Template01});
+    const apiTypeContract = new typeContractService();
+    const [pageSelected, setPageSelected] = useState({
+        fileName: null,
+        module: { default: Template01 }
+    });
     const [budget, setBudget] = useState();
+    const [budgetSelected, setBudgetSelected] = useState();
     const [showModalBudgets, setShowModalBudgets] = useState(false);
 
     const path = ["Meus Contratos", "Gerar Contrato"];
     const navigation = useNavigate();
 
     const templates = import.meta.glob("../../../assets/templates/*.jsx", { eager: true });
-    const typesContracts = Object.values(templates);
-
+    const typesContracts = Object.entries(templates).map(([path, module]) => {
+        const fileName = path.split("/").pop().replace(".jsx", "");
+        return {
+            fileName,
+            module
+        };
+    });
 
     const handleCancel = () => {
         navigation("/contracts");
     }
 
-    const findBudget = () => {
-        const resp = apiBudget.getById(budget.id);
-        setBudget(resp);
+    const findBudget = async () => {
+        const resp = await apiBudget.getById(budget.id);
+        setBudgetSelected(resp.data);
     }
 
-    const createContract = () => {
+    const createContract = async () => {
         let contract;
-        console.log(budget);
+        const typeCcontract = await apiTypeContract.getByName(pageSelected.fileName);
+        contract = {
+            typeContract: typeCcontract.data,
+            budget: budgetSelected,
+            client: budgetSelected.client,
+            inclusionDate: new Date().toISOString(),
+            changeDate: null,
+            inactive: false
+        };
         debugger;
-        // api.save(contract);
-        // generateContract({ page: pageSelected.default, fileName: 'Contrato' });
+        api.save(contract);
+        generateContract({ page: pageSelected.module.default, fileName: pageSelected.fileName || 'Contrato' });
     }
 
     useEffect(() => {
-        createContract();
+        findBudget();
     }, [budget]);
 
     return(
@@ -65,23 +84,23 @@ export default function ListBudgets() {
                         <Input>
                             <label htmlFor=""> Orçamento </label>
                             <div>
-                                <InputClient value={budget?.name ?? ""} disabled type="text" />
+                                <InputClient value={budgetSelected?.title ?? ""} disabled type="text" />
                                 <ButtonModal onClick={() => setShowModalBudgets(true)}> + </ButtonModal>
                             </div>
                         </Input>
                         <Input>
                             <label htmlFor=""> Descrição dos Serviços </label>
-                            <TextArea value={budget?.name ?? ""} disabled/>
+                            <TextArea value={budgetSelected?.descriptionService ?? ""} disabled/>
                         </Input>
                     </ColumnInput>
                     <ColumnInput>
                         <Input>
                             <label htmlFor="" > Cliente </label>
-                            <input value={budget?.name ?? ""} type="text" disabled/>
+                            <input value={budgetSelected?.client.name ?? ""} type="text" disabled/>
                         </Input>
                         <Input>
                             <label htmlFor=""> Valor Total </label>
-                            <input value={budget?.name ?? ""} type="text" disabled/>
+                            <input value={budgetSelected?.total ?? ""} type="text" disabled/>
                         </Input>
                     </ColumnInput>
                 </GroupInput>
