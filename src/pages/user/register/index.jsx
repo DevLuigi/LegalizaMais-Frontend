@@ -128,7 +128,7 @@ export default function Register() {
     }
 
     toast.success("Usuário cadastrado com sucesso!");
-    navigate("/home");
+    navigate("/");
   }
 
   return (
