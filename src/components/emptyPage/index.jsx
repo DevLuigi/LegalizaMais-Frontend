@@ -15,7 +15,7 @@ export default function EmptyPage(props) {
                 <Button
                     id="btn-example"
                     color="blue"
-                    onClick={() => navigation(window.location.pathname+"/form")}
+                    onClick={() => navigation(window.location.pathname+"/0")}
                 >
                     Adicionar
                 </Button>

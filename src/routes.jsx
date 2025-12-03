@@ -42,7 +42,7 @@ export default function RoutesProject() {
 
         {/* Services */}
         <Route path="/services" element={<ListServices />} />
-        <Route path="/services/form" element={<ServiceRegister />} />
+        <Route path="/services/:id" element={<ServiceRegister />} />
 
         {/* Budgets */}
         <Route path="/budgets" element={<ListBudgets />} />
