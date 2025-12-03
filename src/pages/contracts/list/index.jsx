@@ -8,6 +8,7 @@ import Table from "@components/table/index.jsx";
 import {generateContract} from "../../../service/utils/GenerateContract.jsx";
 import apiService from "../../../service/contract/contractService.js";
 import {Container} from "./styled.js";
+import {useNavigate} from "react-router-dom";
 
 export default function ListContracts() {
     const api = new apiService();
@@ -15,6 +16,8 @@ export default function ListContracts() {
     const [header, setHeader] = useState({});
     const [searchTerm, setSearchTerm] = useState('');
     const path = ["Contratos", "Lista de contratos"];
+
+    const navigation = useNavigate();
 
     const templates = import.meta.glob("../../../assets/templates/*.jsx", { eager: true });
     const typesContracts = Object.entries(templates).map(([path, module]) => {
@@ -78,7 +81,7 @@ export default function ListContracts() {
                     <Container>
                         <GroupFilterAndButton>
                             <Filter placeholder="Busque por título, cliente ou CNPJ/CPF" value={searchTerm} onChange={setSearchTerm} />
-                            <Button color="blue" onClick={ () => navigation("/budgets/0") }> Adicionar </Button>
+                            <Button color="blue" onClick={ () => navigation("/contracts/0") }> Adicionar </Button>
                         </GroupFilterAndButton>
                         <Table header={header} data={filtered} actions={tableActions} />
                     </Container>

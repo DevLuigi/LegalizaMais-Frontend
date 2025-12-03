@@ -22,6 +22,7 @@ import apiService from "../../../service/contract/contractService.js";
 import budgetService from "../../../service/budget/budgetService.js";
 import typeContractService from "../../../service/typeContract/typeContractService.js";
 import PopupFilterBudget from "@components/popupFilterBudget/index.jsx";
+import {toast} from "react-toastify";
 
 export default function ListBudgets() {
     const api = new apiService();
@@ -67,9 +68,10 @@ export default function ListBudgets() {
             changeDate: null,
             inactive: false
         };
-        debugger;
         api.save(contract);
         generateContract({ page: pageSelected.module.default, fileName: pageSelected.fileName || 'Contrato' });
+        navigation("/contracts");
+        toast.success("Contrato gerado com sucesso!");
     }
 
     useEffect(() => {
