@@ -109,7 +109,7 @@ export default function ListClients() {
             onChange={setSearchTerm}
           />
 
-          <Button color="blue" onClick={() => navigation("/clients/:id")}>
+          <Button color="blue" onClick={() => navigation("/clients/0")}>
             Adicionar
           </Button>
         </GroupFilterAndButton>

@@ -9,10 +9,8 @@ import { Background, Title, AddressBox, GroupButtons } from "./styled";
 import CardBox from "@components/cardBox";
 import InputSelect from "@components/inputSelect/index.jsx";
 
-import UserAPI from "../../../service/user/user.js";
+import UserAPI from "../../../service/client/client";
 const api = new UserAPI();
-
-import TermsModal from "@components/popupTerms/index.jsx"; // <- novo
 
 export default function Register() {
   const navigate = useNavigate();
@@ -30,12 +28,6 @@ export default function Register() {
   const [addressComplement, setAddressComplement] = useState("");
   const [addressNumber, setAddressNumber] = useState("");
   const [addressInfo, setAddressInfo] = useState("");
-
-  // ✅ NOVO ESTADO PARA ACEITE DOS TERMOS
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
-
-  // ✅ ESTADO PARA ABRIR O MODAL
-  const [openTermsModal, setOpenTermsModal] = useState(false);
 
   // Opções de tipo de pessoa (compatível com enum)
   const options = [
@@ -97,12 +89,6 @@ export default function Register() {
       return;
     }
 
-    // ✅ NOVA VALIDAÇÃO DOS TERMOS
-    if (!acceptedTerms) {
-      toast.error("Você precisa aceitar os termos para continuar!");
-      return;
-    }
-
     const payload = {
       name,
       document,
@@ -116,19 +102,19 @@ export default function Register() {
       addressNumber,
     };
 
-    const response = await api.register(payload);
+    const response = await api.saveClient(payload);
 
     if (!response || response.status !== 201) {
       const errorMessage =
         response?.message ||
         response?.error ||
-        "Erro ao cadastrar usuário. Verifique os dados e tente novamente.";
+        "Erro ao cadastrar cliente. Verifique os dados e tente novamente.";
       toast.error(errorMessage);
       return;
     }
-
-    toast.success("Usuário cadastrado com sucesso!");
-    navigate("/home");
+    
+    toast.success("Cliente cadastrado com sucesso!");
+    navigate("/clients");
   }
 
   return (
@@ -136,7 +122,7 @@ export default function Register() {
       <Logo src={LogoImage} alt="Logo" />
       <CardBox>
         <Container>
-          <Title>Cadastro de Usuário</Title>
+          <Title>Cadastro de Cliente</Title>
 
           <section id="dataSection">
 
@@ -260,24 +246,6 @@ export default function Register() {
             </div>
           </section>
 
-          {/* ✅ CHECKBOX DE ACEITE — ADICIONADO EXATAMENTE AQUI */}
-          <div style={{ width: "100%", marginTop: "15px", display: "flex", justifyContent: "center" }}>
-            <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
-              <input
-                type="checkbox"
-                checked={acceptedTerms}
-                onChange={(e) => setAcceptedTerms(e.target.checked)}
-                style={{ width: "18px", height: "18px" }}
-              />
-              <span>
-                Li e aceito os{" "}
-                <strong style={{ cursor: "pointer", color: "#244fc2" }} onClick={() => setOpenTermsModal(true)}>Termos de Uso</strong>{" "}
-                e a{" "}
-                <strong style={{ cursor: "pointer", color: "#244fc2" }} onClick={() => setOpenTermsModal(true)}>Política de Privacidade</strong>.
-              </span>
-            </label>
-          </div>
-
           <GroupButtons>
             <Button color="blue" onClick={register}>Cadastrar</Button>
             <Button color="red" onClick={() => navigate("/")}>Cancelar</Button>
@@ -286,8 +254,6 @@ export default function Register() {
         </Container>
       </CardBox>
 
-      {/* Modal com termos/política */}
-      <TermsModal isOpen={openTermsModal} onRequestClose={() => setOpenTermsModal(false)} />
     </Background>
   );
 }
