@@ -12,6 +12,8 @@ import InputSelect from "@components/inputSelect/index.jsx";
 import UserAPI from "../../../service/user/user.js";
 const api = new UserAPI();
 
+import TermsModal from "@components/popupTerms/index.jsx"; // <- novo
+
 export default function Register() {
   const navigate = useNavigate();
 
@@ -28,6 +30,12 @@ export default function Register() {
   const [addressComplement, setAddressComplement] = useState("");
   const [addressNumber, setAddressNumber] = useState("");
   const [addressInfo, setAddressInfo] = useState("");
+
+  // ✅ NOVO ESTADO PARA ACEITE DOS TERMOS
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+
+  // ✅ ESTADO PARA ABRIR O MODAL
+  const [openTermsModal, setOpenTermsModal] = useState(false);
 
   // Opções de tipo de pessoa (compatível com enum)
   const options = [
@@ -62,9 +70,7 @@ export default function Register() {
 
   const isInvalidEmail = () => !/^[a-zA-Z0-9.+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
 
-  // Limita a quantidade máxima de caracteres permitidos
   const limitDocument = (value) => {
-    // CPF → 11 dígitos / CNPJ → 14 dígitos
     const maxLength = personType === "JURIDICA" ? 14 : 11;
     return value.replace(/\D/g, "").slice(0, maxLength);
   };
@@ -75,9 +81,7 @@ export default function Register() {
 
   const limitCep = (value) => value.replace(/\D/g, "").slice(0, 8);
 
-
   async function register() {
-    // Validação simples
     if (!name || !document || !personType || !ddd || !phone || !email || !password || !confirmPassword || !cep || !addressComplement || !addressNumber) {
       toast.error("Preencha todos os campos!");
       return;
@@ -93,7 +97,12 @@ export default function Register() {
       return;
     }
 
-    // Requisição para API
+    // ✅ NOVA VALIDAÇÃO DOS TERMOS
+    if (!acceptedTerms) {
+      toast.error("Você precisa aceitar os termos para continuar!");
+      return;
+    }
+
     const payload = {
       name,
       document,
@@ -176,7 +185,6 @@ export default function Register() {
             </div>
 
             <div id="rightData">
-
               <div id="email">
                 <Input label="E-mail" value={email} onChange={setEmail} placeholder="Digite seu email" width="93%" />
               </div>
@@ -189,7 +197,8 @@ export default function Register() {
                     value={password}
                     onChange={setPassword}
                     placeholder="Crie uma senha"
-                    width="170%" />
+                    width="170%"
+                  />
 
                   <Input
                     label="Confirmar Senha"
@@ -197,10 +206,10 @@ export default function Register() {
                     value={confirmPassword}
                     onChange={setConfirmPassword}
                     placeholder="Repita sua senha"
-                    width="170%" />
+                    width="170%"
+                  />
                 </div>
               </div>
-
             </div>
 
           </section>
@@ -210,7 +219,6 @@ export default function Register() {
           </div>
 
           <section id="address">
-
             <div id="leftAddress">
               <div id="cep">
                 <Input
@@ -244,7 +252,6 @@ export default function Register() {
               </div>
             </div>
 
-
             <div id="addressBox">
               <AddressBox>
                 <p><strong>Localidade encontrada</strong></p>
@@ -253,6 +260,24 @@ export default function Register() {
             </div>
           </section>
 
+          {/* ✅ CHECKBOX DE ACEITE — ADICIONADO EXATAMENTE AQUI */}
+          <div style={{ width: "100%", marginTop: "15px", display: "flex", justifyContent: "center" }}>
+            <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+              <input
+                type="checkbox"
+                checked={acceptedTerms}
+                onChange={(e) => setAcceptedTerms(e.target.checked)}
+                style={{ width: "18px", height: "18px" }}
+              />
+              <span>
+                Li e aceito os{" "}
+                <strong style={{ cursor: "pointer", color: "#244fc2" }} onClick={() => setOpenTermsModal(true)}>Termos de Uso</strong>{" "}
+                e a{" "}
+                <strong style={{ cursor: "pointer", color: "#244fc2" }} onClick={() => setOpenTermsModal(true)}>Política de Privacidade</strong>.
+              </span>
+            </label>
+          </div>
+
           <GroupButtons>
             <Button color="blue" onClick={register}>Cadastrar</Button>
             <Button color="red" onClick={() => navigate("/")}>Cancelar</Button>
@@ -260,6 +285,9 @@ export default function Register() {
 
         </Container>
       </CardBox>
-    </Background >
+
+      {/* Modal com termos/política */}
+      <TermsModal isOpen={openTermsModal} onRequestClose={() => setOpenTermsModal(false)} />
+    </Background>
   );
 }
