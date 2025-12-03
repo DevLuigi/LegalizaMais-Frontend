@@ -33,7 +33,7 @@ export default function Menu() {
             </Logo>
             <GroupItens>
                 <div>
-                    <Item onClick={() => navigation("/")}>
+                    <Item onClick={() => navigation("/home")}>
                         <img src={HomeIcon} alt="ícone" width={20} height={20} />
                         <span>Página inicial</span>
                     </Item>
